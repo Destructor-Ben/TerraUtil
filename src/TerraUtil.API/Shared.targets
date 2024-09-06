@@ -1,0 +1,39 @@
+<Project>
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <EnablePreviewFeatures>true</EnablePreviewFeatures>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <NoWarn>MSB3270;MSB3277;X4717;$(NoWarn)</NoWarn>
+  </PropertyGroup>
+
+  <!-- Implicit usings -->
+  <ItemGroup>
+    <Using Include="Microsoft.Xna.Framework" />
+    <Using Include="Microsoft.Xna.Framework.Graphics" />
+    <Using Include="ReLogic.Content" />
+    <Using Include="Terraria" />
+    <Using Include="Terraria.Audio" />
+    <Using Include="Terraria.GameContent" />
+    <Using Include="Terraria.ID" />
+    <Using Include="Terraria.Localization" />
+    <Using Include="Terraria.ModLoader" />
+    <Using Include="Terraria.Utilities" />
+    <Using Include="Terraria.DataStructures" />
+    <Using Include="TerraUtil" />
+    <Using Include="TerraUtil.Utilities" />
+  </ItemGroup>
+
+  <!-- References -->
+  <ItemGroup>
+    <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />
+  </ItemGroup>
+
+  <!-- Remove compiled shader and XNA files from editor -->
+  <ItemGroup>
+    <None Remove="**\*.xnb" />
+    <None Remove="**\*.fxc" />
+  </ItemGroup>
+</Project>

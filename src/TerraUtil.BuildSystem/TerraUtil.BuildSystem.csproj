@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Properties -->
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <Version>0.0.1</Version>
+    <PackageId>TerraUtil.BuildSystem</PackageId>
+    <Title>tModLoader Build System</Title>
+    <Description>The better build system for tModLoader, the mod loader for Terraria.</Description>
+    <Authors>Destructor_Ben</Authors>
+    <PackageTags>Terraria;tModLoader</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/Destructor-Ben/TerraUtil</PackageProjectUrl>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <RepositoryUrl>https://github.com/Destructor-Ben/TerraUtil</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <IsPackable>true</IsPackable>
+  </PropertyGroup>
+
+  <!-- References -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="17.1.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.4" />
+  </ItemGroup>
+
+  <!-- Include the auto imported props and targets files -->
+  <ItemGroup>
+    <None Include="$(MSBuildProjectName).props" Pack="true" PackagePath="build" />
+    <None Include="$(MSBuildProjectName).targets" Pack="true" PackagePath="build" />
+    <None Include="README.md" Pack="true" PackagePath="/" />
+  </ItemGroup>
+</Project>

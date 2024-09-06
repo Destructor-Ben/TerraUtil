@@ -1,0 +1,12 @@
+﻿<Project>
+  <PropertyGroup>
+    <!-- tModLoader.targets Path -->
+    <tMLTargetsPath Condition="$(OS) == 'Windows_NT'">$(HOMEDRIVE)$(HOMEPATH)/Documents/My Games/</tMLTargetsPath>
+    <!-- TODO: support other operating systems -->
+    <tMLTargetsPath>$(tMLTargetsPath)Terraria/tModLoader/ModSources/tModLoader.targets</tMLTargetsPath>
+
+    <!-- TerraUtil.BuildSystem dll path -->
+    <!-- TODO: make this automatic - $(MSBuildThisFileDirectory)../lib/net8.0/$(MSBuildThisFileName).dll -->
+    <TerraUtilTasksPath>C:\Programming\Terraria\Mods\TerraUtil\src\TerraUtil.BuildSystem/bin/Debug/net8.0/TerraUtil.BuildSystem.dll</TerraUtilTasksPath>
+  </PropertyGroup>
+</Project>

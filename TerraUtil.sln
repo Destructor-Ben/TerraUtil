@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerraUtil.BuildSystem", "src\TerraUtil.BuildSystem\TerraUtil.BuildSystem.csproj", "{E10C569A-594A-4AC8-A7EF-8E84879C6264}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerraUtilTestMod", "src\TerraUtilTestMod\TerraUtilTestMod.csproj", "{9B7F6F54-251C-4E31-9859-DD11E51C4F02}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E10C569A-594A-4AC8-A7EF-8E84879C6264}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E10C569A-594A-4AC8-A7EF-8E84879C6264}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E10C569A-594A-4AC8-A7EF-8E84879C6264}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E10C569A-594A-4AC8-A7EF-8E84879C6264}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B7F6F54-251C-4E31-9859-DD11E51C4F02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B7F6F54-251C-4E31-9859-DD11E51C4F02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B7F6F54-251C-4E31-9859-DD11E51C4F02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B7F6F54-251C-4E31-9859-DD11E51C4F02}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

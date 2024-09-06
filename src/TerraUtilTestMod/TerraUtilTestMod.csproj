@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Properties -->
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <Version>1.0.0</Version>
+    <DisplayName>TerraUtil Test Mod</DisplayName>
+    <Author>Destructor_Ben</Author>
+    <HideResources>false</HideResources>
+  </PropertyGroup>
+
+  <!-- References -->
+  <ItemGroup>
+    <PackageReference Include="TerraUtil.BuildSystem" Version="*" />
+  </ItemGroup>
+</Project>
