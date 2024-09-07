@@ -32,7 +32,17 @@ public class GenerateModSourcesSymlink : BaseTask
             return;
 
         // Symlink!
-        Log.LogMessage(MessageImportance.High, "Symlinking project to ModSources...");
-        Directory.CreateSymbolicLink(targetPath, ProjectPath);
+        Log.LogMessage(MessageImportance.High, "Symlinking mod to ModSources...");
+
+        // Admin is needed to make symlink, if it fails, make sure the user knows
+        try
+        {
+            Directory.CreateSymbolicLink(targetPath, ProjectPath);
+        }
+        catch
+        {
+            Log.LogError("Unable to create symlink, please make sure that your IDE is run in admin mode or you run dotnet build with admin privileges.\nOnce the symlink is created, admin is no longer required to build the mod.");
+            throw;
+        }
     }
 }
