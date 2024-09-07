@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
-    <Version>0.0.2</Version>
+    <Version>0.0.5</Version>
     <PackageId>TerraUtil.BuildSystem</PackageId>
     <PackageIcon>icon.png</PackageIcon>
     <Title>TerraUtil Build System</Title>
@@ -15,7 +15,9 @@
     <Copyright>Copyright © Destructor_Ben 2024</Copyright>
     <PackageTags>Terraria;tModLoader</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageReleaseNotes>Improved the package info, attempted to make it work on other peoples machines.</PackageReleaseNotes>
+    <PackageReleaseNotes>
+      - Cleaning up build tasks.
+    </PackageReleaseNotes>
 
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/Destructor-Ben/TerraUtil</PackageProjectUrl>
@@ -38,6 +40,7 @@
 
   <!-- Packing files -->
   <ItemGroup>
+    <None Include="$(OutputPath)\*.dll" Pack="true" PackagePath="build" Visible="false" />
     <None Include="$(MSBuildProjectName).props" Pack="true" PackagePath="build" />
     <None Include="$(MSBuildProjectName).targets" Pack="true" PackagePath="build" />
     <None Include="README.md" Pack="true" PackagePath="/" />

@@ -1,12 +1,18 @@
 ﻿<Project>
   <PropertyGroup>
-    <!-- tModLoader.targets Path -->
-    <tMLTargetsPath Condition="$(OS) == 'Windows_NT'">$(HOMEDRIVE)$(HOMEPATH)/Documents/My Games/</tMLTargetsPath>
-    <!-- TODO: support other operating systems -->
-    <tMLTargetsPath>$(tMLTargetsPath)Terraria/tModLoader/ModSources/tModLoader.targets</tMLTargetsPath>
+    <!-- tML storage path -->
+    <!-- TODO: maybe just use a task with SavePathLocator? -->
+    <tMLStoragePath Condition="$(OS) == 'Windows_NT'">$(USERPROFILE)/Documents/My Games/</tMLStoragePath>
+    <tMLStoragePath Condition="$(OS) == 'OSX'">$(HOME)/Library/Application support/</tMLStoragePath>
+    <tMLStoragePath Condition="$(OS) == 'Unix' or $(OS) == 'Linux'">$(XDG_DATA_HOME)/</tMLStoragePath>
+    <tMLStoragePath Condition="$(tMLStoragePath) == '' AND ($(OS) == 'Unix' OR $(OS) == 'Linux')">$(HOME)/.local/share/</tMLStoragePath>
+    <tMLStoragePath>$(tMLStoragePath)Terraria/tModLoader/</tMLStoragePath>
+
+    <!-- tModLoader.targets and ModSources paths -->
+    <tMLModSourcesPath>$(tMLStoragePath)ModSources/</tMLModSourcesPath>
+    <tMLTargetsPath>$(tMLModSourcesPath)tModLoader.targets</tMLTargetsPath>
 
     <!-- TerraUtil.BuildSystem dll path -->
-    <!-- TODO: make this automatic - $(MSBuildThisFileDirectory)../lib/net8.0/$(MSBuildThisFileName).dll -->
-    <TerraUtilTasksPath>C:\Programming\Terraria\Mods\TerraUtil\src\TerraUtil.BuildSystem/bin/Debug/net8.0/TerraUtil.BuildSystem.dll</TerraUtilTasksPath>
+    <TerraUtilTasksPath>$(MSBuildThisFileDirectory)$(MSBuildThisFileName).dll</TerraUtilTasksPath>
   </PropertyGroup>
 </Project>
