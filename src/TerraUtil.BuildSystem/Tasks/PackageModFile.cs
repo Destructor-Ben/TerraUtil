@@ -86,11 +86,11 @@ public class PackageModFile : BaseTask
         Log.LogMessage(MessageImportance.Normal, $"Found mod's dll file: {modDllPath}");
 
         // Load the mod properties from the .csproj or build.txt
-        BuildProperties modProperties = GetModProperties();
+        var modProperties = GetModProperties();
         Log.LogMessage(MessageImportance.Normal, $"Loaded build properties: {modProperties}");
 
-        Version tmlVersion = SavePathLocator.GetTmlVersion(TmlDllPath);
-        ModFile tmodFile = new(OutputTmodPath, AssemblyName, modProperties.Version, tmlVersion);
+        var tmlVersion = SavePathLocator.GetTmlVersion(TmlDllPath);
+        var tmodFile = new ModFile(OutputTmodPath, AssemblyName, modProperties.Version, tmlVersion);
 
         // Add files to the .tmod file
         tmodFile.AddFile(modDllName, File.ReadAllBytes(modDllPath));
@@ -107,22 +107,23 @@ public class PackageModFile : BaseTask
         tmodFile.AddFile("Info", modProperties.ToBytes(tmlVersion.ToString()));
 
         Log.LogMessage(MessageImportance.Normal, "Adding resources...");
-        List<string> resources = Directory.GetFiles(ProjectDirectory, "*", SearchOption.AllDirectories)
-                                          .Where(res => !IgnoreResource(modProperties, res))
-                                          .ToList();
+        var resources = Directory.GetFiles(ProjectDirectory, "*", SearchOption.AllDirectories)
+                                 .Where(res => !IgnoreResource(modProperties, res))
+                                 .ToList();
 
         Parallel.ForEach(resources, resource => AddResource(tmodFile, resource));
 
-        // Save it
+        // Save the mod file to the output folder and the mods folder
         Log.LogMessage(MessageImportance.Normal, "Saving mod file...");
         try
         {
+            string outputFolderPath = Path.Join(ProjectDirectory, OutputPath, $"{AssemblyName}.tmod");
             tmodFile.Save();
-            // TODO: save to the bin folder too
+            tmodFile.Save(outputFolderPath);
         }
         catch (Exception e)
         {
-            Log.LogError("Failed to create .tmod file. Check that the mod isn't enabled if tModLoader is open.\n" + "Full error: " + e);
+            Log.LogError($"Failed to create .tmod file. Check that the mod isn't enabled if tModLoader is open.\nFull error: {e}");
             return;
         }
 
@@ -139,17 +140,17 @@ public class PackageModFile : BaseTask
 
     private void AddAllReferences(ModFile tmodFile, BuildProperties modProperties)
     {
-        List<ITaskItem> nugetReferences = GetNugetReferences();
-        List<ITaskItem> modReferences = GetModReferences();
-        List<ITaskItem> projectReferences = GetProjectReferences();
+        var nugetReferences = GetNugetReferences();
+        var modReferences = GetModReferences();
+        var projectReferences = GetProjectReferences();
 
         // Assumes all dll references are under the mod's folder (at same level or in subfolders).
         // Letting dll references be anywhere would mean doing some weird filters on references,
         // or using a custom `<DllReference>` thing that would get translated to a `<Reference>`.
-        List<ITaskItem> dllReferences = ReferencePaths.Where(x => x.GetMetadata("FullPath").StartsWith(ProjectDirectory)).ToList();
+        var dllReferences = ReferencePaths.Where(x => x.GetMetadata("FullPath").StartsWith(ProjectDirectory, StringComparison.Ordinal)).ToList();
         Log.LogMessage(MessageImportance.Normal, $"Found {dllReferences.Count} dll references.");
 
-        foreach (ITaskItem taskItem in nugetReferences)
+        foreach (var taskItem in nugetReferences)
         {
             string nugetName = "lib/" + taskItem.GetMetadata("NuGetPackageId") + ".dll";
             string nugetFile = taskItem.GetMetadata("HintPath");
@@ -165,7 +166,7 @@ public class PackageModFile : BaseTask
             modProperties.AddDllReference(taskItem.GetMetadata("NuGetPackageId"));
         }
 
-        foreach (ITaskItem dllReference in dllReferences)
+        foreach (var dllReference in dllReferences)
         {
             string dllPath = dllReference.GetMetadata("FullPath");
             string dllName = Path.GetFileNameWithoutExtension(dllPath);
@@ -181,7 +182,7 @@ public class PackageModFile : BaseTask
             modProperties.AddDllReference(dllName);
         }
 
-        foreach (ITaskItem projectReference in projectReferences)
+        foreach (var projectReference in projectReferences)
         {
             string dllPath = projectReference.ItemSpec;
             string outputPath = "lib/" + Path.GetFileName(dllPath);
@@ -198,7 +199,7 @@ public class PackageModFile : BaseTask
             modProperties.AddDllReference(Path.GetFileNameWithoutExtension(dllPath));
         }
 
-        foreach (ITaskItem modReference in modReferences)
+        foreach (var modReference in modReferences)
         {
             string modName = modReference.GetMetadata("Identity");
             string weakRef = modReference.GetMetadata("Weak");
@@ -213,15 +214,9 @@ public class PackageModFile : BaseTask
 
     private List<ITaskItem> GetNugetReferences()
     {
-        Dictionary<string, ITaskItem> nugetLookup = PackageReferences.ToDictionary(x => x.ItemSpec);
+        var nugetLookup = PackageReferences.ToDictionary(x => x.ItemSpec);
 
         // Check if any packages in IgnoredNugetPackages are present in nugetLookup, and if they are, remove them
-        // TODO: this loop is temporary for debugging
-        foreach (var package in nugetLookup)
-        {
-            Log.LogWarning(package.Key);
-        }
-
         foreach (string ignoredNugetPackage in IgnoredNugetPackages)
         {
             Log.LogWarning("Ignoring package: " + ignoredNugetPackage);
@@ -234,7 +229,7 @@ public class PackageModFile : BaseTask
         }
 
         List<ITaskItem> nugetReferences = [];
-        foreach (ITaskItem referencePath in ReferencePaths)
+        foreach (var referencePath in ReferencePaths)
         {
             string? hintPath = referencePath.GetMetadata("HintPath");
             string? nugetPackageId = referencePath.GetMetadata("NuGetPackageId");
@@ -264,7 +259,7 @@ public class PackageModFile : BaseTask
     private List<ITaskItem> GetModReferences()
     {
         List<ITaskItem> modReferences = [];
-        foreach (ITaskItem modReference in ModReferences)
+        foreach (var modReference in ModReferences)
         {
             string modPath = modReference.GetMetadata("HintPath");
             if (modPath.Length == 0)
@@ -288,7 +283,7 @@ public class PackageModFile : BaseTask
     private List<ITaskItem> GetProjectReferences()
     {
         List<ITaskItem> projectReferences = [];
-        foreach (ITaskItem projectReference in ProjectReferences)
+        foreach (var projectReference in ProjectReferences)
         {
             string dllPath = projectReference.ItemSpec;
             if (!File.Exists(dllPath))
@@ -317,7 +312,7 @@ public class PackageModFile : BaseTask
             }
         }
 
-        BuildProperties properties = BuildProperties.ReadTaskItems(ModProperties);
+        var properties = BuildProperties.ReadTaskItems(ModProperties);
         string descriptionFilePath = Path.Combine(ProjectDirectory, "description.txt");
         if (!File.Exists(descriptionFilePath))
         {

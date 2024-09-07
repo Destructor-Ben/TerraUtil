@@ -57,8 +57,19 @@ public class ModFile
         _files.Add(new FileEntry(fileName, -1, size, data.Length, data));
     }
 
-    // TODO: add a stream version so you can save to more than just the mods folder
-    internal void Save()
+    public void Save()
+    {
+        Save(_path);
+    }
+
+    public void Save(string path)
+    {
+        Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+        using var fileStream = File.Create(path);
+        Save(fileStream);
+    }
+
+    public void Save(Stream stream)
     {
         // write the general TMOD header and data blob
         // TMOD ascii identifier
@@ -67,17 +78,15 @@ public class ModFile
         // signature
         // data length
         // signed data
-        Directory.CreateDirectory(Path.GetDirectoryName(_path)!);
-        using FileStream fileStream = File.Create(_path);
-        using var writer = new BinaryWriter(fileStream);
+        using var writer = new BinaryWriter(stream);
 
         writer.Write(Encoding.ASCII.GetBytes("TMOD"));
         writer.Write(ModLoaderVersion.ToString());
 
-        int hashPos = (int)fileStream.Position;
+        int hashPos = (int)stream.Position;
         writer.Write(new byte[20 + 256 + 4]); //hash, sig, data length
 
-        int dataPos = (int)fileStream.Position;
+        int dataPos = (int)stream.Position;
         writer.Write(Name);
         writer.Write(Version.ToString());
 
@@ -100,7 +109,7 @@ public class ModFile
         }
 
         // write compressed files and update offsets
-        int offset = (int)fileStream.Position; // offset starts at end of file table
+        int offset = (int)stream.Position; // offset starts at end of file table
         foreach (var f in _files)
         {
             writer.Write(f.cachedBytes);
@@ -110,17 +119,17 @@ public class ModFile
         }
 
         // update hash
-        fileStream.Position = dataPos;
-        byte[] hash = SHA1.Create().ComputeHash(fileStream);
+        stream.Position = dataPos;
+        byte[] hash = SHA1.Create().ComputeHash(stream);
 
-        fileStream.Position = hashPos;
+        stream.Position = hashPos;
         writer.Write(hash);
 
         //skip signature
-        fileStream.Seek(256, SeekOrigin.Current);
+        stream.Seek(256, SeekOrigin.Current);
 
         // write data length
-        writer.Write((int)(fileStream.Length - dataPos));
+        writer.Write((int)(stream.Length - dataPos));
     }
 
     // Ignore file extensions which don't compress well under deflate to improve build time
