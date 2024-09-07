@@ -1,6 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
+﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
@@ -111,8 +109,8 @@ public static class SavePathLocator
     public static Version GetTmlVersion(string tmlDllPath)
     {
         var versionInfo = FileVersionInfo.GetVersionInfo(tmlDllPath);
-        string tmlVersion = versionInfo.ProductVersion;
-        tmlVersion = tmlVersion.Substring(tmlVersion.IndexOf("+", StringComparison.Ordinal) + 1);
+        string? tmlVersion = versionInfo.ProductVersion;
+        tmlVersion = tmlVersion![(tmlVersion.IndexOf('+') + 1)..];
         tmlVersion = tmlVersion.Split('|')[0];
         return Version.Parse(tmlVersion);
     }
