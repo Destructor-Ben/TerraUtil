@@ -8,11 +8,14 @@
 
     <Version>0.0.2</Version>
     <PackageId>TerraUtil.BuildSystem</PackageId>
+    <PackageIcon>icon.png</PackageIcon>
     <Title>TerraUtil Build System</Title>
     <Description>The better build system for tModLoader, the mod loader for Terraria.</Description>
     <Authors>Destructor_Ben</Authors>
+    <Copyright>Copyright © Destructor_Ben 2024</Copyright>
     <PackageTags>Terraria;tModLoader</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReleaseNotes>Improved the package info, attempted to make it work on other peoples machines.</PackageReleaseNotes>
 
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/Destructor-Ben/TerraUtil</PackageProjectUrl>
@@ -38,5 +41,6 @@
     <None Include="$(MSBuildProjectName).props" Pack="true" PackagePath="build" />
     <None Include="$(MSBuildProjectName).targets" Pack="true" PackagePath="build" />
     <None Include="README.md" Pack="true" PackagePath="/" />
+    <None Include="icon.png" Pack="true" PackagePath="/" />
   </ItemGroup>
 </Project>

@@ -1,4 +1,9 @@
 ﻿# To Do List
+- Icons
+  - 128x128 for TerraUtil.API (NuGet)
+  - 128x128 for TerraUtil.BuildSystem (NuGet)
+  - 80x80 and either 512x512 or 480x480 for TerraUtil.DevTools (tML Mod)
+  - Svg for Rider IDE
 - Clean up everything below
 
 # OLD
