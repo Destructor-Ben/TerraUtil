@@ -13,5 +13,8 @@
 
     <!-- TerraUtil.BuildSystem dll path -->
     <TerraUtilTasksPath>$(MSBuildThisFileDirectory)$(MSBuildThisFileName).dll</TerraUtilTasksPath>
+
+    <!-- Debug tasks path (because NuGet is weird and doesn't like local testing) -->
+    <TerraUtilTasksPath Condition="$(TerraUtilLocalTest) == 'true'">$(MSBuildThisFileDirectory)bin/Debug/net8.0/$(MSBuildThisFileName).dll</TerraUtilTasksPath>
   </PropertyGroup>
 </Project>

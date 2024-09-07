@@ -32,7 +32,7 @@ public class GenerateModSourcesSymlink : BaseTask
             return;
 
         // Symlink!
-        Log.LogMessage("Symlinking project to ModSources...");
+        Log.LogMessage(MessageImportance.High, "Symlinking project to ModSources...");
         Directory.CreateSymbolicLink(targetPath, ProjectPath);
     }
 }

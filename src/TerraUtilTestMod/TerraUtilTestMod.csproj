@@ -12,8 +12,15 @@
     <HideResources>false</HideResources>
   </PropertyGroup>
 
-  <!-- References -->
+  <!-- Weird hack to test this because NuGet doesn't like local testing -->
+  <PropertyGroup>
+    <TerraUtilLocalTest>true</TerraUtilLocalTest>
+  </PropertyGroup>
+  
+  <Import Project="../TerraUtil.BuildSystem/TerraUtil.BuildSystem.props" />
+  <Import Project="../TerraUtil.BuildSystem/TerraUtil.BuildSystem.targets" />
+
   <ItemGroup>
-    <PackageReference Include="TerraUtil.BuildSystem" Version="*" />
+    <ProjectReference Include="../TerraUtil.BuildSystem/TerraUtil.BuildSystem.csproj" Private="true" />
   </ItemGroup>
 </Project>
