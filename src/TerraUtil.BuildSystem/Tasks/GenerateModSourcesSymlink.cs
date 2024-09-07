@@ -1,5 +1,7 @@
 ﻿using Microsoft.Build.Framework;
 
+// ReSharper disable AutoPropertyCanBeMadeGetOnly.Global
+
 namespace TerraUtil.BuildSystem.Tasks;
 
 public class GenerateModSourcesSymlink : BaseTask
@@ -30,6 +32,7 @@ public class GenerateModSourcesSymlink : BaseTask
             return;
 
         // Symlink!
+        Log.LogMessage("Symlinking project to ModSources...");
         Directory.CreateSymbolicLink(targetPath, ProjectPath);
     }
 }

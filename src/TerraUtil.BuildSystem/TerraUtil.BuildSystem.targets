@@ -29,10 +29,11 @@
 
   <!-- Symlink into ModSources if the mod isn't in there -->
   <UsingTask TaskName="GenerateModSourcesSymlink" AssemblyFile="$(TerraUtilTasksPath)" TaskFactory="TaskHostFactory" />
-  <Target Name="GenerateModSourcesSymlink">
+  <Target Name="GenerateModSourcesSymlink" AfterTargets="Build">
     <GenerateModSourcesSymlink
-      ModSourcesPath=""
-      ModInternalName=""
+      ProjectPath="$(MSBuildProjectDirectory)"
+      ModSourcesPath="$(tMLModSourcesPath)"
+      ModInternalName="$(AssemblyName)"
     />
   </Target>
 
