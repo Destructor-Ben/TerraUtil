@@ -11,8 +11,9 @@ Based on [this pull request](https://github.com/tModLoader/tModLoader/pull/2472)
 
 ## Future Features
 
+- Allow mod code to be outside of `ModSources`
 - Automatic workshop icon generation
-- Automatic workshop description generation and compilation from markdown
+- Automatic workshop description and changelog generation and compilation from markdown
 - Effect compilation
 
 # Licensing

@@ -6,9 +6,26 @@
   - Svg for Rider IDE
 - Clean up everything below
 
+## TerraUtil.BuildSystem
+- Go through all code
+- Make mods automatically symlink to ModSources
+- Effect compiler
+- Workshop icon generation
+- Workshop description & changelog generation
+
+## TerraUtil.API
+- Fix and clean up
+
+## TerraUtil.DevTools
+- Change the build action to run dotnet build
+- Shader + asset hot reloads
+- Could look into what other dev mods do
+
+## TerraUtil.TestMod
+- Make a good test
+
 # OLD
 # To Do List
-- Make the tmod file output in bin as well as the Mods folder
 - Fix how references are added - only add ones that are in the output folder? maybe keep a list of ignored assemblies?
   - Need to fix how terrautil.buildsystem is included in the modfile
 - Why does AssemblyName need to be specified?
@@ -27,18 +44,3 @@
   - The guide of primz (XD87) — 06/19/2024 2:20 AM
   you can build without a .csproj or code files (if you provide a dll), the namespace and mod class are used for validation during loading
   p sure its just the folder name
-- MAKE THE MODS AUTOMATICALLY SMYLINK TO MODSOURCES WITH BUILD TASKS
-
-## API
-- Fix, clean up, move into multiple nuget packages?
-
-## Build System
-- Get basic mod building working first
-- Then get fancy description and icon generation
-- Then do effect compiling
-- Also make sure obj is used as the intermediate directory
-
-## Dev Tools
-- A mod that is used in game
-- Changes the build action to run dotnet build
-- Shader + asset hot reloads
