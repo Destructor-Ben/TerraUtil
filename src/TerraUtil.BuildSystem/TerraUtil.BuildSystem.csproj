@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
-    <Version>0.0.6</Version>
+    <Version>0.0.7</Version>
     <PackageId>TerraUtil.BuildSystem</PackageId>
     <PackageIcon>icon.png</PackageIcon>
     <Title>TerraUtil Build System</Title>
@@ -16,7 +16,7 @@
     <PackageTags>Terraria;tModLoader</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageReleaseNotes>
-      - Cleaning up build tasks.
+      Preparing for a release.
     </PackageReleaseNotes>
 
     <PackageLicenseExpression>MIT</PackageLicenseExpression>

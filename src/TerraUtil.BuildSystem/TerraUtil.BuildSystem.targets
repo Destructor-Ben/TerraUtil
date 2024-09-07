@@ -2,21 +2,10 @@
   <!-- Import tModLoader.targets -->
   <Import Project="$(tMLTargetsPath)" />
 
-  <!-- TODO: testing, im not sure this file is actually being imported automatically -->
-  <Target Name="Test" AfterTargets="Build">
-    <Message IsCritical="true" Text="TEST" />
-    <Message IsCritical="true" Text="$(TerraUtilTasksPath)" />
-
-    <Message IsCritical="true" Text="$(tMLStoragePath)" />
-    <Message IsCritical="true" Text="$(tMLTargetsPath)" />
-    <Message IsCritical="true" Text="$(tMLModSourcesPath)" />
-    <Message IsCritical="true" Text="$(tMLSteamPath)" />
-  </Target>
-
   <!-- Redefine the normal build target -->
   <Target Name="BuildMod" />
 
-  <!-- Create the ModReference item group and hide them from the editor -->
+  <!-- Create the ModReference item group and hide the referenced files from the editor -->
   <ItemDefinitionGroup>
     <ModReference>
       <Visible>false</Visible>

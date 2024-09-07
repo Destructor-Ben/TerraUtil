@@ -4,6 +4,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerraUtil.BuildSystem", "sr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerraUtilTestMod", "src\TerraUtilTestMod\TerraUtilTestMod.csproj", "{9B7F6F54-251C-4E31-9859-DD11E51C4F02}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerraUtil.API", "src\TerraUtil.API\TerraUtil.API.csproj", "{DD6EA086-F49A-4942-B635-040675C05B02}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerraUtil.DevTools", "src\TerraUtil.DevTools\TerraUtil.DevTools.csproj", "{B684D0C9-054D-4EE1-B4FE-B7D6E88F3A9A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +22,13 @@ Global
 		{9B7F6F54-251C-4E31-9859-DD11E51C4F02}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B7F6F54-251C-4E31-9859-DD11E51C4F02}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B7F6F54-251C-4E31-9859-DD11E51C4F02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD6EA086-F49A-4942-B635-040675C05B02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD6EA086-F49A-4942-B635-040675C05B02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD6EA086-F49A-4942-B635-040675C05B02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD6EA086-F49A-4942-B635-040675C05B02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B684D0C9-054D-4EE1-B4FE-B7D6E88F3A9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B684D0C9-054D-4EE1-B4FE-B7D6E88F3A9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B684D0C9-054D-4EE1-B4FE-B7D6E88F3A9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B684D0C9-054D-4EE1-B4FE-B7D6E88F3A9A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
