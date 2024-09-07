@@ -4,7 +4,11 @@ The better build system for tModLoader, the mod loader for Terraria.
 
 Based on [this pull request](https://github.com/tModLoader/tModLoader/pull/2472) by Chik3r, with modifications made by me.
 
-## Licensing
+# Features
+
+- TODO: make the list of features
+
+# Licensing
 
 This code is licensed under the MIT license.
 
