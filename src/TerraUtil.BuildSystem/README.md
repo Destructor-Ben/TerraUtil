@@ -9,13 +9,6 @@ Based on [this pull request](https://github.com/tModLoader/tModLoader/pull/2472)
 - `build.txt` properties moved to the `.csproj`.
 - All references (`<Reference>`, `<ProjectReference>`, `<PackageReference>`, and `<ModReference>`) are all done inside the `.csproj` and are automatically added to the mod file.
 
-## Future Features
-
-- Allow mod code to be outside of `ModSources`
-- Automatic workshop icon generation
-- Automatic workshop description and changelog generation and compilation from markdown
-- Effect compilation
-
 # Licensing
 
 This code is licensed under the MIT license.

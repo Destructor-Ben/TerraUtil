@@ -9,6 +9,16 @@
 ## TerraUtil.BuildSystem
 - Go through all code
 - Make mods automatically symlink to ModSources
+- Output tmod files to bin as well
+- Unify internal names
+  - Irrelevant names
+    - Namespaces
+    - Mod class
+    - Csproj name
+    - Folder name
+  - Relevant names
+    - Assembly name
+    - Mod name property?
 - Effect compiler
 - Workshop icon generation
 - Workshop description & changelog generation
@@ -24,10 +34,19 @@
 ## TerraUtil.TestMod
 - Make a good test
 
+## TerraUtil.GitHubActions
+- Various GitHub actions
+  - Lint
+  - Format
+  - Build
+  - Publish
+  - Post mod file to Discord web hook
+
+## TerraUtil.TemplateMod
+- Template mod for TerraUtil
+
 # OLD
 # To Do List
-- Fix how references are added - only add ones that are in the output folder? maybe keep a list of ignored assemblies?
-  - Need to fix how terrautil.buildsystem is included in the modfile
 - Why does AssemblyName need to be specified?
   - Ozzatron — 06/18/2024 11:03 AM
     Is it required for the ModSources/MyModName folder to be identically named to the mod's internal name?
