@@ -14,13 +14,13 @@ More info about the individual projects can be found in their respective readmes
 - [TerraUtil.BuildSystem](https://github.com/Destructor-Ben/TerraUtil/blob/main/src/TerraUtil.BuildSystem/README.md)
 - [TerraUtil.DevTools](https://github.com/Destructor-Ben/TerraUtil/blob/main/src/TerraUtil.DevTools/README.md)
 
-# How to Use
+## How to Use
 
 To use TerraUtil.API and TerraUtil.BuildSystem, install their respective nuget packages.
 
 TerraUtil.DevTools can be found either on the steam workshop or in the tML mod browser in game.
 
-## Links
+## Install Links
 
 - [TerraUtil.API](https://www.nuget.org/packages/TerraUtil.API)
 - [TerraUtil.BuildSystem](https://www.nuget.org/packages/TerraUtil.BuildSystem)
