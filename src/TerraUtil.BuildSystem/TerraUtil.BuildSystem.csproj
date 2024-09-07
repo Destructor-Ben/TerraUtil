@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
-    <Version>0.0.1</Version>
+    <Version>0.0.2</Version>
     <PackageId>TerraUtil.BuildSystem</PackageId>
     <Title>tModLoader Build System</Title>
     <Description>The better build system for tModLoader, the mod loader for Terraria.</Description>
@@ -33,7 +33,7 @@
     <PackageReference Include="SixLabors.ImageSharp" Version="3.1.4" />
   </ItemGroup>
 
-  <!-- Include the auto imported props and targets files -->
+  <!-- Packing files -->
   <ItemGroup>
     <None Include="$(MSBuildProjectName).props" Pack="true" PackagePath="build" />
     <None Include="$(MSBuildProjectName).targets" Pack="true" PackagePath="build" />
