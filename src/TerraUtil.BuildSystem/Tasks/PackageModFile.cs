@@ -2,6 +2,8 @@
 using Newtonsoft.Json;
 using TerraUtil.BuildSystem.Core;
 
+// ReSharper disable AutoPropertyCanBeMadeGetOnly.Global
+
 namespace TerraUtil.BuildSystem.Tasks;
 
 public class PackageModFile : BaseTask
@@ -10,24 +12,24 @@ public class PackageModFile : BaseTask
     /// NuGet package references.
     /// </summary>
     [Required]
-    public ITaskItem[] PackageReferences { get; set; } = Array.Empty<ITaskItem>();
+    public ITaskItem[] PackageReferences { get; set; } = [];
 
     /// <summary>
     /// Project references.
     /// </summary>
-    public ITaskItem[] ProjectReferences { get; set; } = Array.Empty<ITaskItem>();
+    public ITaskItem[] ProjectReferences { get; set; } = [];
 
     /// <summary>
     /// Assembly references.
     /// </summary>
     [Required]
-    public ITaskItem[] ReferencePaths { get; set; } = Array.Empty<ITaskItem>();
+    public ITaskItem[] ReferencePaths { get; set; } = [];
 
     /// <summary>
     /// Mod references.
     /// </summary>
     [Required]
-    public ITaskItem[] ModReferences { get; set; } = Array.Empty<ITaskItem>();
+    public ITaskItem[] ModReferences { get; set; } = [];
 
     /// <summary>
     /// The directory where the .csproj is.
@@ -62,10 +64,10 @@ public class PackageModFile : BaseTask
     /// The mod properties. (Previously found in <c>build.txt</c>)
     /// </summary>
     [Required]
-    public ITaskItem[] ModProperties { get; set; } = Array.Empty<ITaskItem>();
+    public ITaskItem[] ModProperties { get; set; } = [];
 
-    private static readonly IList<string> SourceExtensions = new List<string> { ".csproj", ".cs", ".sln" };
-    private static readonly IList<string> IgnoredNugetPackages = new List<string> { "tModLoader.CodeAssist", "TerraUtil.BuildSystem" };
+    private static readonly IList<string> SourceExtensions = [".csproj", ".cs", ".sln"];
+    private static readonly IList<string> IgnoredNugetPackages = ["tModLoader.CodeAssist", "TerraUtil.BuildSystem"];
 
     protected override void Run()
     {
@@ -231,7 +233,7 @@ public class PackageModFile : BaseTask
             }
         }
 
-        List<ITaskItem> nugetReferences = new List<ITaskItem>();
+        List<ITaskItem> nugetReferences = [];
         foreach (ITaskItem referencePath in ReferencePaths)
         {
             string? hintPath = referencePath.GetMetadata("HintPath");
@@ -261,7 +263,7 @@ public class PackageModFile : BaseTask
 
     private List<ITaskItem> GetModReferences()
     {
-        List<ITaskItem> modReferences = new List<ITaskItem>();
+        List<ITaskItem> modReferences = [];
         foreach (ITaskItem modReference in ModReferences)
         {
             string modPath = modReference.GetMetadata("HintPath");
@@ -285,7 +287,7 @@ public class PackageModFile : BaseTask
 
     private List<ITaskItem> GetProjectReferences()
     {
-        List<ITaskItem> projectReferences = new();
+        List<ITaskItem> projectReferences = [];
         foreach (ITaskItem projectReference in ProjectReferences)
         {
             string dllPath = projectReference.ItemSpec;
@@ -355,30 +357,29 @@ public class PackageModFile : BaseTask
 
     private bool IgnoreResource(BuildProperties properties, string resourcePath)
     {
-        string relPath = resourcePath.Substring(ProjectDirectory.Length + 1);
+        string relPath = resourcePath[(ProjectDirectory.Length + 1)..];
         return properties.IgnoreFile(relPath)
             || relPath[0] == '.'
-            || relPath.StartsWith("bin" + Path.DirectorySeparatorChar)
-            || relPath.StartsWith("obj" + Path.DirectorySeparatorChar)
+            || relPath.StartsWith("bin" + Path.DirectorySeparatorChar, StringComparison.Ordinal)
+            || relPath.StartsWith("obj" + Path.DirectorySeparatorChar, StringComparison.Ordinal)
             || relPath == "build.txt"
             || // For mods that still use a build.txt
                !properties.IncludeSource && SourceExtensions.Contains(Path.GetExtension(resourcePath))
             || Path.GetFileName(resourcePath) == "Thumbs.db";
     }
 
-    private void AddResource(ModFile tmodFile, string resourcePath)
+    private void AddResource(ModFile modFile, string resourcePath)
     {
-        string relPath = resourcePath.Substring(ProjectDirectory.Length + 1);
+        string relPath = resourcePath[(ProjectDirectory.Length + 1)..];
 
         Log.LogMessage(MessageImportance.Low, "Adding resource: {0}", relPath);
 
-        using FileStream src = File.OpenRead(resourcePath);
-        using MemoryStream dst = new MemoryStream();
+        using var src = File.OpenRead(resourcePath);
+        using var dst = new MemoryStream();
 
         if (!ContentConverters.Convert(ref relPath, src, dst))
             src.CopyTo(dst);
 
-        tmodFile.AddFile(relPath, dst.ToArray());
-        src.Dispose();
+        modFile.AddFile(relPath, dst.ToArray());
     }
 }
