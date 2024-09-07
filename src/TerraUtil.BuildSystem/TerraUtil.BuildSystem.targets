@@ -27,12 +27,20 @@
     </ItemGroup>
   </Target>
 
+  <!-- Symlink into ModSources if the mod isn't in there -->
+  <UsingTask TaskName="GenerateModSourcesSymlink" AssemblyFile="$(TerraUtilTasksPath)" TaskFactory="TaskHostFactory" />
+  <Target Name="GenerateModSourcesSymlink">
+    <GenerateModSourcesSymlink
+      ModSourcesPath=""
+      ModInternalName=""
+    />
+  </Target>
+
   <!-- Package the mod into a .tmod file -->
   <UsingTask TaskName="PackageModFile" AssemblyFile="$(TerraUtilTasksPath)" TaskFactory="TaskHostFactory" />
   <Target Name="Package" AfterTargets="Build">
     <Message Text="Packaging mod..." />
 
-    <Message Text="Converting mod properties into item group..." />
     <ItemGroup>
       <ModProperty Include="Version" Value="$(Version)" Condition="$(Version) != ''" />
       <ModProperty Include="DisplayName" Value="$(DisplayName)" Condition="$(DisplayName) != ''" />
@@ -58,7 +66,7 @@
       AssemblyName="$(AssemblyName)"
       TmlDllPath="$(tMLSteamPath)$(tMLPath)"
       OutputTmodPath="$(OutputTmodPath)"
-      ModProperties="@(ModProperty)">
-    </PackageModFile>
+      ModProperties="@(ModProperty)"
+    />
   </Target>
 </Project>
