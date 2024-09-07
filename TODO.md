@@ -1,4 +1,8 @@
 ﻿# To Do List
+- Clean up everything below
+
+# OLD
+# To Do List
 - Make the tmod file output in bin as well as the Mods folder
 - Fix how references are added - only add ones that are in the output folder? maybe keep a list of ignored assemblies?
   - Need to fix how terrautil.buildsystem is included in the modfile
@@ -21,7 +25,7 @@
 - MAKE THE MODS AUTOMATICALLY SMYLINK TO MODSOURCES WITH BUILD TASKS
 
 ## API
-- Fix, clean up, move into multiple nuget packages
+- Fix, clean up, move into multiple nuget packages?
 
 ## Build System
 - Get basic mod building working first
@@ -32,3 +36,4 @@
 ## Dev Tools
 - A mod that is used in game
 - Changes the build action to run dotnet build
+- Shader + asset hot reloads

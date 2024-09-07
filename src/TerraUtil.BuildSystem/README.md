@@ -2,8 +2,16 @@
 
 The better build system for tModLoader, the mod loader for Terraria.
 
-Based on [Mod building using dotnet build](https://github.com/tModLoader/tModLoader/pull/2472) by Chik3r.
+Based on [this pull request](https://github.com/tModLoader/tModLoader/pull/2472) by Chik3r, with modifications made by me.
 
 ## Licensing
 
-tModLoader (tML) is licensed under the MIT license, which is included in this repository as the code for TerraUtil.
+This code is licensed under the MIT license.
+
+Some code from tModLoader is used, which is licensed under the MIT license.
+
+The used code is:
+
+- Everything under the `Core` folder
+- `Tasks/BaseTask.cs`
+- `Tasks/PackageModFile.cs`

@@ -8,7 +8,7 @@
 
     <Version>0.0.2</Version>
     <PackageId>TerraUtil.BuildSystem</PackageId>
-    <Title>tModLoader Build System</Title>
+    <Title>TerraUtil Build System</Title>
     <Description>The better build system for tModLoader, the mod loader for Terraria.</Description>
     <Authors>Destructor_Ben</Authors>
     <PackageTags>Terraria;tModLoader</PackageTags>
