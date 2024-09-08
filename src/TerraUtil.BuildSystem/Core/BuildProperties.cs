@@ -20,6 +20,7 @@ public class BuildProperties
     public string[] SortBefore = [];
 
     public Ignore.Ignore IgnoredFiles = new();
+    public bool HideCode = false;
     public bool HideResources = false;
     public bool PlayableOnPreview = true;
     public bool TranslationMod = false;
@@ -63,16 +64,19 @@ public class BuildProperties
         writer.Write("");
     }
 
-    public static BuildProperties Read(IEnumerable<ITaskItem> taskItems)
+    public static BuildProperties Read(IEnumerable<ITaskItem> modProperties, IEnumerable<ITaskItem> sortBefore, IEnumerable<ITaskItem> sortAfter)
     {
         var properties = new BuildProperties();
 
-        foreach (var property in taskItems)
+        foreach (var property in modProperties)
         {
             string propertyName = property.ItemSpec;
             string propertyValue = property.GetMetadata("Value");
             ProcessProperty(properties, propertyName, propertyValue);
         }
+
+        properties.SortBefore = sortBefore.Select(m => m.ItemSpec).ToArray();
+        properties.SortAfter = sortAfter.Select(m => m.ItemSpec).ToArray();
 
         VerifyRefs(properties.RefNames(true).ToList());
         properties.SortAfter = properties.GetDistinctRefs();
@@ -84,7 +88,6 @@ public class BuildProperties
     {
         switch (property)
         {
-            // TODO: sortBefore, sortAfter
             case "Author":
                 properties.Author = value;
                 break;
@@ -96,6 +99,9 @@ public class BuildProperties
                 break;
             case "Homepage":
                 properties.Homepage = value;
+                break;
+            case "HideCode":
+                properties.HideCode = string.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
                 break;
             case "HideResources":
                 properties.HideResources = string.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
@@ -189,17 +195,17 @@ public class BuildProperties
             writer.Write(Description);
         }
 
-        if (!HideResources)
-            writer.Write("!hideResources");
-
-        //if (IncludeSource)
-        //writer.Write("includeSource");
-
         if (!PlayableOnPreview)
             writer.Write("!playableOnPreview");
 
         if (TranslationMod)
             writer.Write("translationMod");
+
+        if (!HideCode)
+            writer.Write("!hideCode");
+
+        if (!HideResources)
+            writer.Write("!hideResources");
 
         if (EacPath.Length > 0)
         {

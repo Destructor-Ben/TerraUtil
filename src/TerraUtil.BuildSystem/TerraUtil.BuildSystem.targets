@@ -14,11 +14,19 @@
     <RootNamespace>$(InternalName)</RootNamespace>
   </PropertyGroup>
 
-  <!-- Create the ModReference item group and hide the referenced files from the editor -->
+  <!-- Create the ModReference, SortBefore, and SortAfter item groups -->
   <ItemDefinitionGroup>
     <ModReference>
       <Visible>false</Visible>
     </ModReference>
+
+    <SortBefore>
+      <Visible>false</Visible>
+    </SortBefore>
+
+    <SortAfter>
+      <Visible>false</Visible>
+    </SortAfter>
   </ItemDefinitionGroup>
 
   <!-- Turn ModReferences into ProjectReferences and References -->
@@ -56,12 +64,9 @@
       <ModProperty Include="DisplayName" Value="$(DisplayName)" Condition="'$(DisplayName)' != ''" />
       <ModProperty Include="Author" Value="$(Author)" Condition="'$(Author)' != ''" />
       <ModProperty Include="Homepage" Value="$(Homepage)" Condition="'$(Homepage)' != ''" />
+      <ModProperty Include="HideCode" Value="$(HideCode)" Condition="'$(HideCode)' != ''" />
       <ModProperty Include="HideResources" Value="$(HideResources)" Condition="'$(HideResources)' != ''" />
-      <ModProperty Include="IncludeSource" Value="$(IncludeSource)" Condition="'$(IncludeSource)' != ''" />
-      <ModProperty Include="BuildIgnore" Value="$(BuildIgnore)" Condition="'$(BuildIgnore)' != ''" />
       <ModProperty Include="Side" Value="$(Side)" Condition="'$(Side)' != ''" />
-      <ModProperty Include="SortBefore" Value="$(SortBefore)" Condition="'$(SortBefore)' != ''" />
-      <ModProperty Include="SortAfter" Value="$(SortAfter)" Condition="'$(SortAfter)' != ''" />
       <ModProperty Include="PlayableOnPreview" Value="$(PlayableOnPreview)" Condition="'$(PlayableOnPreview)' != ''" />
       <ModProperty Include="TranslationMod" Value="$(TranslationMod)" Condition="'$(TranslationMod)' != ''" />
     </ItemGroup>
@@ -77,6 +82,8 @@
       ModLoaderDllPath="$(tMLSteamPath)$(tMLPath)"
       OutputModFilePath="$(OutputModFilePath)"
       ModProperties="@(ModProperty)"
+      SortBefore="@(SortBefore)"
+      SortAfter="@(SortAfter)"
     />
   </Target>
 </Project>

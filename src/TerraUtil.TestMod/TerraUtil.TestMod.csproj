@@ -10,8 +10,15 @@
     <DisplayName>TerraUtil.TestMod</DisplayName>
     <InternalName>TerraUtilTestMod</InternalName>
     <Author>Destructor_Ben</Author>
+    <HideCode>false</HideCode>
     <HideResources>false</HideResources>
   </PropertyGroup>
+
+  <!-- Sort before and after -->
+  <ItemGroup>
+    <SortBefore Include="ThoriumMod" />
+    <SortAfter Include="CalamityMod" />
+  </ItemGroup>
 
   <!-- Weird hack to test this because NuGet doesn't like local testing -->
   <PropertyGroup>

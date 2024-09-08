@@ -66,6 +66,18 @@ public class PackageModFile : BaseTask
     [Required]
     public ITaskItem[] ModProperties { get; set; } = [];
 
+    /// <summary>
+    /// The list of mods that this mod needs to load before.
+    /// </summary>
+    [Required]
+    public ITaskItem[] SortBefore { get; set; } = [];
+
+    /// <summary>
+    /// The list of mods that this mod needs to load after.
+    /// </summary>
+    [Required]
+    public ITaskItem[] SortAfter { get; set; } = [];
+
     private static readonly IList<string> SourceExtensions = [".csproj", ".cs", ".sln"];
     private static readonly IList<string> IgnoredNugetPackages = ["tModLoader.CodeAssist", "TerraUtil.BuildSystem"];
 
@@ -93,7 +105,7 @@ public class PackageModFile : BaseTask
         var tmlVersion = SavePathLocator.GetTmlVersion(ModLoaderDllPath);
         var modFile = new ModFile(OutputModFilePath, InternalName, modProperties.Version, tmlVersion);
 
-        // Add files to the .tmod file
+        // Add dlls to the .tmod file
         modFile.AddFile(modDllName, File.ReadAllBytes(modDllPath));
         AddAllReferences(modFile, modProperties);
 
@@ -305,7 +317,7 @@ public class PackageModFile : BaseTask
 
     private BuildProperties GetModProperties()
     {
-        var properties = BuildProperties.Read(ModProperties);
+        var properties = BuildProperties.Read(ModProperties, SortBefore, SortAfter);
 
         // Get the description
         string descriptionPath = Path.Combine(ProjectPath, "description.txt");
