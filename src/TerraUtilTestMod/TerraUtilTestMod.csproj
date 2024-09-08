@@ -7,7 +7,8 @@
     <Nullable>enable</Nullable>
 
     <Version>1.0.0</Version>
-    <DisplayName>TerraUtil Test Mod</DisplayName>
+    <DisplayName>TerraUtil.TestMod</DisplayName>
+    <InternalName>TerraUtilTestMod</InternalName>
     <Author>Destructor_Ben</Author>
     <HideResources>false</HideResources>
   </PropertyGroup>

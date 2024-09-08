@@ -5,10 +5,11 @@
   <!-- Redefine the normal build target -->
   <Target Name="BuildMod" />
 
-  <!-- Set the internal name if not already set -->
+  <!-- Make internal names work -->
   <PropertyGroup>
     <InternalName Condition="'$(InternalName)' == ''">$(MSBuildProjectName)</InternalName>
     <AssemblyName>$(InternalName)</AssemblyName>
+    <RootNamespace>$(InternalName)</RootNamespace>
   </PropertyGroup>
 
   <!-- Create the ModReference item group and hide the referenced files from the editor -->
