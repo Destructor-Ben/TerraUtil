@@ -106,7 +106,10 @@ public static class SavePathLocator
     {
         var versionInfo = FileVersionInfo.GetVersionInfo(tmlDllPath);
         string? tmlVersion = versionInfo.ProductVersion;
-        tmlVersion = tmlVersion![(tmlVersion.IndexOf('+') + 1)..];
+        if (tmlVersion is null)
+            throw new Exception("Unable to get tML version");
+
+        tmlVersion = tmlVersion[(tmlVersion.IndexOf('+') + 1)..];
         tmlVersion = tmlVersion.Split('|')[0];
         return Version.Parse(tmlVersion);
     }
