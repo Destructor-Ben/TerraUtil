@@ -1,7 +1,6 @@
 ﻿using System.Collections.Concurrent;
 using System.IO.Compression;
 using System.Security.Cryptography;
-using System.Text;
 
 namespace TerraUtil.BuildSystem.Core;
 
@@ -80,7 +79,7 @@ public class ModFile
         // signed data
         using var writer = new BinaryWriter(stream);
 
-        writer.Write(Encoding.ASCII.GetBytes("TMOD"));
+        writer.Write("TMOD"u8.ToArray());
         writer.Write(ModLoaderVersion.ToString());
 
         int hashPos = (int)stream.Position;
@@ -100,8 +99,8 @@ public class ModFile
 
         foreach (var f in _files)
         {
-            if (f.CompressedLength != f.cachedBytes.Length)
-                throw new Exception($"CompressedLength ({f.CompressedLength}) != cachedBytes.Length ({f.cachedBytes.Length}): {f.Name}");
+            if (f.CompressedLength != f.Data.Length)
+                throw new Exception($"CompressedLength ({f.CompressedLength}) != cachedBytes.Length ({f.Data.Length}): {f.Name}");
 
             writer.Write(f.Name);
             writer.Write(f.Length);
@@ -112,7 +111,7 @@ public class ModFile
         int offset = (int)stream.Position; // offset starts at end of file table
         foreach (var f in _files)
         {
-            writer.Write(f.cachedBytes);
+            writer.Write(f.Data);
 
             f.Offset = offset;
             offset += f.CompressedLength;

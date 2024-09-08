@@ -1,5 +1,4 @@
-﻿using System.IO;
-using SixLabors.ImageSharp;
+﻿using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 
 namespace TerraUtil.BuildSystem.Core;

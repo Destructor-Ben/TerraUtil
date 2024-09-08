@@ -8,17 +8,20 @@
 
 ## TerraUtil.BuildSystem
 - Go through all code
-- Make mods automatically symlink to ModSources
-- Output tmod files to bin as well
+- [Done] Make mods automatically symlink to ModSources
+- [Done] Output tmod files to bin as well
+- Make mod file ignoring better
 - Unify internal names
-  - Irrelevant names
-    - Namespaces
-    - Mod class
-    - Csproj name
-    - Folder name
-  - Relevant names
-    - Assembly name
-    - Mod name property?
+  - Make an internal name property, and set assembly name to it. Default internal name to the project name. Use the internal name in symlinking too.
+  - Ignore the below
+    - Irrelevant names
+      - Namespaces
+      - Mod class
+      - Csproj name
+      - Folder name
+    - Relevant names
+      - Assembly name
+      - Mod name property?
 - Effect compiler
 - Workshop icon generation
 - Workshop description & changelog generation

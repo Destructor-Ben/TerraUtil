@@ -29,7 +29,7 @@ public static class SavePathLocator
             BuildPurpose.Stable  => ReleaseFolder,
             BuildPurpose.Dev     => DevFolder,
             BuildPurpose.Preview => PreviewFolder,
-            _                    => throw new ArgumentOutOfRangeException(),
+            _                    => ReleaseFolder,
         };
 
         if (File.Exists(Path.Combine(tmlSteamPath, "savehere.txt")))
@@ -54,9 +54,7 @@ public static class SavePathLocator
     private static string GetStoragePath()
     {
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-        {
             return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "My Games");
-        }
 
         if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
         {
@@ -69,9 +67,7 @@ public static class SavePathLocator
 
         string? text = Environment.GetEnvironmentVariable("XDG_DATA_HOME");
         if (!string.IsNullOrEmpty(text))
-        {
             return text;
-        }
 
         text = Environment.GetEnvironmentVariable("HOME");
         if (string.IsNullOrEmpty(text))
@@ -85,7 +81,7 @@ public static class SavePathLocator
     private static BuildPurpose GetBuildPurpose(TaskLoggingHelper logger, string tmlDllPath)
     {
         var versionInfo = FileVersionInfo.GetVersionInfo(tmlDllPath);
-        string tmlInfoVersion = versionInfo.ProductVersion;
+        string tmlInfoVersion = versionInfo.ProductVersion!;
 
         if (string.IsNullOrEmpty(tmlInfoVersion))
         {
@@ -95,7 +91,7 @@ public static class SavePathLocator
 
         logger.LogMessage(MessageImportance.Low, $"tML Informational Version: {tmlInfoVersion}");
 
-        string[] parts = tmlInfoVersion.Substring(tmlInfoVersion.IndexOf('+') + 1).Split('|');
+        string[] parts = tmlInfoVersion[(tmlInfoVersion.IndexOf('+') + 1)..].Split('|');
         if (parts.Length > 3)
         {
             if (Enum.TryParse(parts[3], true, out BuildPurpose purpose))

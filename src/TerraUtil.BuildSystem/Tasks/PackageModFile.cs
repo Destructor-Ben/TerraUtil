@@ -202,10 +202,11 @@ public class PackageModFile : BaseTask
         foreach (var modReference in modReferences)
         {
             string modName = modReference.GetMetadata("Identity");
+            string modVersion = modReference.GetMetadata("Version");
             string weakRef = modReference.GetMetadata("Weak");
 
-            Log.LogMessage(MessageImportance.Normal, $"Adding mod reference with mod name {modName} [Weak: {weakRef}]");
-            modProperties.AddModReference(modName, string.Equals(weakRef, "true", StringComparison.OrdinalIgnoreCase));
+            Log.LogMessage(MessageImportance.Normal, $"Adding mod reference with mod name {modName} [Weak: {weakRef}, Version: {modVersion}]");
+            modProperties.AddModReference(modName, modVersion is null ? null : new Version(modVersion), string.Equals(weakRef, "true", StringComparison.OrdinalIgnoreCase));
         }
 
         // Add modReferences to sortAfter if they are not already in sortBefore
@@ -300,20 +301,9 @@ public class PackageModFile : BaseTask
 
     private BuildProperties GetModProperties()
     {
-        // Check there are at least 2 properties because `Version` always exists
-        if (ModProperties.Length < 2)
-        {
-            Log.LogMessage(MessageImportance.Low, "No mod properties found in csproj.");
-            string buildInfoFile = Path.Combine(ProjectDirectory, "build.txt");
-            if (File.Exists(buildInfoFile))
-            {
-                Log.LogWarning("Using deprecated build.txt file");
-                return BuildProperties.ReadBuildInfo(buildInfoFile);
-            }
-        }
-
-        var properties = BuildProperties.ReadTaskItems(ModProperties);
+        var properties = BuildProperties.Read(ModProperties);
         string descriptionFilePath = Path.Combine(ProjectDirectory, "description.txt");
+        // TODO: .buildignore
         if (!File.Exists(descriptionFilePath))
         {
             Log.LogWarning("Mod description not found with path: " + descriptionFilePath);
@@ -352,29 +342,28 @@ public class PackageModFile : BaseTask
 
     private bool IgnoreResource(BuildProperties properties, string resourcePath)
     {
-        string relPath = resourcePath[(ProjectDirectory.Length + 1)..];
-        return properties.IgnoreFile(relPath)
-            || relPath[0] == '.'
-            || relPath.StartsWith("bin" + Path.DirectorySeparatorChar, StringComparison.Ordinal)
-            || relPath.StartsWith("obj" + Path.DirectorySeparatorChar, StringComparison.Ordinal)
-            || relPath == "build.txt"
-            || // For mods that still use a build.txt
-               !properties.IncludeSource && SourceExtensions.Contains(Path.GetExtension(resourcePath))
+        // Path relative to the project path
+        string path = resourcePath[(ProjectDirectory.Length + 1)..];
+        return properties.IgnoreFile(path)
+            || path[0] == '.'
+            || path.StartsWith("bin" + Path.DirectorySeparatorChar, StringComparison.Ordinal)
+            || path.StartsWith("obj" + Path.DirectorySeparatorChar, StringComparison.Ordinal)
+            || SourceExtensions.Contains(Path.GetExtension(resourcePath))
             || Path.GetFileName(resourcePath) == "Thumbs.db";
     }
 
     private void AddResource(ModFile modFile, string resourcePath)
     {
-        string relPath = resourcePath[(ProjectDirectory.Length + 1)..];
+        string relativePath = resourcePath[(ProjectDirectory.Length + 1)..];
 
-        Log.LogMessage(MessageImportance.Low, "Adding resource: {0}", relPath);
+        Log.LogMessage(MessageImportance.Low, "Adding resource: {0}", relativePath);
 
         using var src = File.OpenRead(resourcePath);
         using var dst = new MemoryStream();
 
-        if (!ContentConverters.Convert(ref relPath, src, dst))
+        if (!ContentConverters.Convert(ref relativePath, src, dst))
             src.CopyTo(dst);
 
-        modFile.AddFile(relPath, dst.ToArray());
+        modFile.AddFile(relativePath, dst.ToArray());
     }
 }

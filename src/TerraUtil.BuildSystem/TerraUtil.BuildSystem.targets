@@ -17,13 +17,13 @@
     <Message Text="Adding %(ModReference.Identity) as a reference" />
 
     <ItemGroup>
-      <Reference Include="%(ModReference.Identity)" Condition="'%(ModReference.ProjectPath)'=='' AND '%(ModReference.HintPath)'!=''" Private="true">
+      <Reference Include="%(ModReference.Identity)" Condition="'%(ModReference.ProjectPath)' == '' AND '%(ModReference.HintPath)' != ''" Private="true">
         <HintPath>%(ModReference.HintPath)</HintPath>
       </Reference>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="%(ModReference.ProjectPath)" Condition="'%(ModReference.ProjectPath)'!=''" Private="true" />
+      <ProjectReference Include="%(ModReference.ProjectPath)" Condition="'%(ModReference.ProjectPath)' != ''" Private="true" />
     </ItemGroup>
   </Target>
 
