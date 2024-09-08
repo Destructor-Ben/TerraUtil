@@ -1,6 +1,8 @@
 ﻿using System.Data;
 using Microsoft.Build.Framework;
 
+// ReSharper disable FieldCanBeMadeReadOnly.Global
+
 namespace TerraUtil.BuildSystem.Core;
 
 public class BuildProperties
@@ -12,12 +14,12 @@ public class BuildProperties
     public string Description = string.Empty;
 
     public List<string> DllReferences = [];
-    public readonly List<ModReference> ModReferences = [];
-    public readonly List<ModReference> WeakReferences = [];
+    public List<ModReference> ModReferences = [];
+    public List<ModReference> WeakReferences = [];
     public string[] SortAfter = [];
     public string[] SortBefore = [];
-    //public string[] BuildIgnores = []; // TODO: ignore.ignore
 
+    public Ignore.Ignore IgnoredFiles = new();
     public bool HideResources = false;
     public bool IncludeSource = false;
     public bool PlayableOnPreview = true;
@@ -62,7 +64,7 @@ public class BuildProperties
         writer.Write("");
     }
 
-    public static BuildProperties Read(IEnumerable<ITaskItem> taskItems)
+    public static BuildProperties Read(IEnumerable<ITaskItem> taskItems, List<string>? buildIgnore = null)
     {
         var properties = new BuildProperties();
 
@@ -71,6 +73,14 @@ public class BuildProperties
             string propertyName = property.ItemSpec;
             string propertyValue = property.GetMetadata("Value");
             ProcessProperty(properties, propertyName, propertyValue);
+        }
+
+        if (buildIgnore is not null)
+        {
+            foreach (string line in buildIgnore)
+            {
+                properties.IgnoredFiles.Add(line);
+            }
         }
 
         VerifyRefs(properties.RefNames(true).ToList());
@@ -224,8 +234,7 @@ public class BuildProperties
 
     public bool IgnoreFile(string resource)
     {
-        // TODO: make this do the Ignore.Ignore so we can have .buildignore
-        // TODO: why does this happen?
-        return DllReferences.Contains("lib/" + Path.GetFileName(resource));
+        // Ignore dll references that would already be added by AddDllReference
+        return IgnoredFiles.IsIgnored(resource) || DllReferences.Contains("lib/" + Path.GetFileName(resource));
     }
 }
