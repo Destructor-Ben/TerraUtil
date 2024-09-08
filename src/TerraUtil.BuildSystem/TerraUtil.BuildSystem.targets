@@ -5,6 +5,12 @@
   <!-- Redefine the normal build target -->
   <Target Name="BuildMod" />
 
+  <!-- Set the internal name if not already set -->
+  <PropertyGroup>
+    <InternalName Condition="'$(InternalName)' == ''">$(MSBuildProjectName)</InternalName>
+    <AssemblyName>$(InternalName)</AssemblyName>
+  </PropertyGroup>
+
   <!-- Create the ModReference item group and hide the referenced files from the editor -->
   <ItemDefinitionGroup>
     <ModReference>
@@ -33,7 +39,7 @@
     <GenerateModSourcesSymlink
       ProjectPath="$(MSBuildProjectDirectory)"
       ModSourcesPath="$(tMLModSourcesPath)"
-      ModInternalName="$(AssemblyName)"
+      ModInternalName="$(InternalName)"
     />
   </Target>
 
@@ -43,18 +49,18 @@
     <Message Text="Packaging mod..." />
 
     <ItemGroup>
-      <ModProperty Include="Version" Value="$(Version)" Condition="$(Version) != ''" />
-      <ModProperty Include="DisplayName" Value="$(DisplayName)" Condition="$(DisplayName) != ''" />
-      <ModProperty Include="Author" Value="$(Author)" Condition="$(Author) != ''" />
-      <ModProperty Include="Homepage" Value="$(Homepage)" Condition="$(Homepage) != ''" />
-      <ModProperty Include="HideResources" Value="$(HideResources)" Condition="$(HideResources) != ''" />
-      <ModProperty Include="IncludeSource" Value="$(IncludeSource)" Condition="$(IncludeSource) != ''" />
-      <ModProperty Include="BuildIgnore" Value="$(BuildIgnore)" Condition="$(BuildIgnore) != ''" />
-      <ModProperty Include="Side" Value="$(Side)" Condition="$(Side) != ''" />
-      <ModProperty Include="SortBefore" Value="$(SortBefore)" Condition="$(SortBefore) != ''" />
-      <ModProperty Include="SortAfter" Value="$(SortAfter)" Condition="$(SortAfter) != ''" />
-      <ModProperty Include="PlayableOnPreview" Value="$(PlayableOnPreview)" Condition="$(PlayableOnPreview) != ''" />
-      <ModProperty Include="TranslationMod" Value="$(TranslationMod)" Condition="$(TranslationMod) != ''" />
+      <ModProperty Include="Version" Value="$(Version)" Condition="'$(Version)' != ''" />
+      <ModProperty Include="DisplayName" Value="$(DisplayName)" Condition="'$(DisplayName)' != ''" />
+      <ModProperty Include="Author" Value="$(Author)" Condition="'$(Author)' != ''" />
+      <ModProperty Include="Homepage" Value="$(Homepage)" Condition="'$(Homepage)' != ''" />
+      <ModProperty Include="HideResources" Value="$(HideResources)" Condition="'$(HideResources)' != ''" />
+      <ModProperty Include="IncludeSource" Value="$(IncludeSource)" Condition="'$(IncludeSource)' != ''" />
+      <ModProperty Include="BuildIgnore" Value="$(BuildIgnore)" Condition="'$(BuildIgnore)' != ''" />
+      <ModProperty Include="Side" Value="$(Side)" Condition="'$(Side)' != ''" />
+      <ModProperty Include="SortBefore" Value="$(SortBefore)" Condition="'$(SortBefore)' != ''" />
+      <ModProperty Include="SortAfter" Value="$(SortAfter)" Condition="'$(SortAfter)' != ''" />
+      <ModProperty Include="PlayableOnPreview" Value="$(PlayableOnPreview)" Condition="'$(PlayableOnPreview)' != ''" />
+      <ModProperty Include="TranslationMod" Value="$(TranslationMod)" Condition="'$(TranslationMod)' != ''" />
     </ItemGroup>
 
     <PackageModFile
@@ -64,7 +70,7 @@
       ModReferences="@(ModReference)"
       ProjectPath="$(MSBuildProjectDirectory)"
       OutputPath="$(OutputPath)"
-      InternalName="$(AssemblyName)"
+      InternalName="$(InternalName)"
       ModLoaderDllPath="$(tMLSteamPath)$(tMLPath)"
       OutputModFilePath="$(OutputModFilePath)"
       ModProperties="@(ModProperty)"

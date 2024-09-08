@@ -7,11 +7,13 @@
 - Clean up everything below
 
 ## TerraUtil.BuildSystem
-- Go through all code
+- [Done] Go through all code
 - [Done] Make mods automatically symlink to ModSources
 - [Done] Output tmod files to bin as well
-- Make mod file ignoring better
-- Unify internal names
+- [Done] Make mod file ignoring better
+- Clean up references
+- Clean up properties
+- [Done] Unify internal names
   - Make an internal name property, and set assembly name to it. Default internal name to the project name. Use the internal name in symlinking too.
   - Ignore the below
     - Irrelevant names
@@ -21,7 +23,7 @@
       - Folder name
     - Relevant names
       - Assembly name
-      - Mod name property?
+      - Add a mod name property?
 - Effect compiler
 - Workshop icon generation
 - Workshop description & changelog generation
