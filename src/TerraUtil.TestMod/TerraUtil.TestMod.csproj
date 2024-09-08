@@ -15,14 +15,16 @@
     <HideCode>false</HideCode>
     <HideResources>false</HideResources>
     <PlayableOnPreview>false</PlayableOnPreview>
-    <TranslationMod>true</TranslationMod>
+    <TranslationMod>false</TranslationMod>
     <Side>Client</Side>
   </PropertyGroup>
 
-  <!-- Sort before and after -->
   <ItemGroup>
     <SortBefore Include="ThoriumMod" />
     <SortAfter Include="CalamityMod" />
+
+    <ModReference Include="AccessoriesPlus" Weak="true" />
+    <PackageReference Include="Ignore" Version="0.2.1" />
   </ItemGroup>
 
   <!-- Weird hack to test this because NuGet doesn't like local testing -->

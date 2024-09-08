@@ -222,7 +222,7 @@ public class PackageModFile : BaseTask
             string weakRef = modReference.GetMetadata("Weak");
 
             Log.LogMessage(MessageImportance.Normal, $"Adding mod reference with mod name {modName} [Weak: {weakRef}, Version: {modVersion}]");
-            modProperties.AddModReference(modName, modVersion is null ? null : new Version(modVersion), string.Equals(weakRef, "true", StringComparison.OrdinalIgnoreCase));
+            modProperties.AddModReference(modName, string.IsNullOrWhiteSpace(modVersion) ? null : new Version(modVersion), string.Equals(weakRef, "true", StringComparison.OrdinalIgnoreCase));
         }
 
         // Add modReferences to sortAfter if they are not already in sortBefore
@@ -283,13 +283,14 @@ public class PackageModFile : BaseTask
                 modPath = modReference.GetMetadata("ProjectPath");
 
             string modName = modReference.GetMetadata("Identity");
+            string modVersion = modReference.GetMetadata("Version");
             string weakRef = modReference.GetMetadata("Weak");
             bool isWeak = string.Equals(weakRef, "true", StringComparison.OrdinalIgnoreCase);
 
             if (modName.Length == 0)
                 throw new Exception("A mod reference must have an identity (Include=\"ModName\"). It should match the internal name of the mod you are referencing.");
 
-            Log.LogMessage(MessageImportance.Normal, $"{modName} [Weak: {isWeak}] - Found at: {modPath}");
+            Log.LogMessage(MessageImportance.Normal, $"{modName} [Weak: {isWeak}, Version: {modVersion}] - Found at: {modPath}");
             modReferences.Add(modReference);
         }
 
@@ -364,6 +365,7 @@ public class PackageModFile : BaseTask
     private bool IgnoreResource(BuildProperties properties, string resourcePath)
     {
         // Path relative to the project path
+        // TODO: possibly make these all added to the .buildignore automatically
         string path = resourcePath[(ProjectPath.Length + 1)..];
         return properties.IgnoreFile(path)
             || path[0] == '.'
@@ -371,7 +373,6 @@ public class PackageModFile : BaseTask
             || path.StartsWith("obj" + Path.DirectorySeparatorChar, StringComparison.Ordinal)
             || SourceExtensions.Contains(Path.GetExtension(resourcePath))
             || path == Path.Join("Properties", "launchSettings.json")
-            || path == ".buildignore"
             || Path.GetFileName(resourcePath) == "Thumbs.db";
     }
 
