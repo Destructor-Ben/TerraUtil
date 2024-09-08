@@ -21,7 +21,6 @@ public class BuildProperties
 
     public Ignore.Ignore IgnoredFiles = new();
     public bool HideResources = false;
-    public bool IncludeSource = false;
     public bool PlayableOnPreview = true;
     public bool TranslationMod = false;
     public string EacPath = string.Empty;
@@ -64,7 +63,7 @@ public class BuildProperties
         writer.Write("");
     }
 
-    public static BuildProperties Read(IEnumerable<ITaskItem> taskItems, List<string>? buildIgnore = null)
+    public static BuildProperties Read(IEnumerable<ITaskItem> taskItems)
     {
         var properties = new BuildProperties();
 
@@ -73,14 +72,6 @@ public class BuildProperties
             string propertyName = property.ItemSpec;
             string propertyValue = property.GetMetadata("Value");
             ProcessProperty(properties, propertyName, propertyValue);
-        }
-
-        if (buildIgnore is not null)
-        {
-            foreach (string line in buildIgnore)
-            {
-                properties.IgnoredFiles.Add(line);
-            }
         }
 
         VerifyRefs(properties.RefNames(true).ToList());
@@ -108,9 +99,6 @@ public class BuildProperties
                 break;
             case "HideResources":
                 properties.HideResources = string.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
-                break;
-            case "IncludeSource":
-                properties.IncludeSource = string.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
                 break;
             case "PlayableOnPreview":
                 properties.PlayableOnPreview = string.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
@@ -204,8 +192,8 @@ public class BuildProperties
         if (!HideResources)
             writer.Write("!hideResources");
 
-        if (IncludeSource)
-            writer.Write("includeSource");
+        //if (IncludeSource)
+        //writer.Write("includeSource");
 
         if (!PlayableOnPreview)
             writer.Write("!playableOnPreview");
@@ -235,6 +223,6 @@ public class BuildProperties
     public bool IgnoreFile(string resource)
     {
         // Ignore dll references that would already be added by AddDllReference
-        return IgnoredFiles.IsIgnored(resource) || DllReferences.Contains("lib/" + Path.GetFileName(resource));
+        return IgnoredFiles.IsIgnored(resource.Replace('\\', '/')) || DllReferences.Contains("lib/" + Path.GetFileName(resource));
     }
 }

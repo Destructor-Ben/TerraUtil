@@ -17,4 +17,10 @@
     <!-- Debug tasks path (because NuGet is weird and doesn't like local testing) -->
     <TerraUtilTasksPath Condition="$(TerraUtilLocalTest) == 'true'">$(MSBuildThisFileDirectory)bin/Debug/net8.0/$(MSBuildThisFileName).dll</TerraUtilTasksPath>
   </PropertyGroup>
+
+  <!-- Include files that should trigger a rebuild/be available to source generators -->
+  <ItemGroup>
+    <AdditionalFiles Include=".buildignore" />
+    <AdditionalFiles Include="**/*.fx" />
+  </ItemGroup>
 </Project>

@@ -11,11 +11,11 @@ public static class SavePathLocator
     public const string PreviewFolder = "tModLoader-preview";
     public const string DevFolder = "tModLoader-dev";
 
-    public static string FindSavePath(TaskLoggingHelper logger, string tmlDllPath, string assemblyName)
+    public static string FindSavePath(TaskLoggingHelper logger, string tmlDllPath, string internalName)
     {
         string saveFolder = FindSaveFolder(logger, tmlDllPath);
 
-        return Path.Combine(saveFolder, "Mods", Path.ChangeExtension(assemblyName, ".tmod"));
+        return Path.Combine(saveFolder, "Mods", Path.ChangeExtension(internalName, ".tmod"));
     }
 
     public static string FindSaveFolder(TaskLoggingHelper logger, string tmlDllPath)

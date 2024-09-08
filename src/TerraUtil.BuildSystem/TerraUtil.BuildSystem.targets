@@ -60,13 +60,13 @@
     <PackageModFile
       PackageReferences="@(PackageReference)"
       ProjectReferences="@(_ResolvedProjectReferencePaths)"
+      DllReferences="@(ReferencePath)"
       ModReferences="@(ModReference)"
-      ReferencePaths="@(ReferencePath)"
-      ProjectDirectory="$(MSBuildProjectDirectory)"
+      ProjectPath="$(MSBuildProjectDirectory)"
       OutputPath="$(OutputPath)"
-      AssemblyName="$(AssemblyName)"
-      TmlDllPath="$(tMLSteamPath)$(tMLPath)"
-      OutputTmodPath="$(OutputTmodPath)"
+      InternalName="$(AssemblyName)"
+      ModLoaderDllPath="$(tMLSteamPath)$(tMLPath)"
+      OutputModFilePath="$(OutputModFilePath)"
       ModProperties="@(ModProperty)"
     />
   </Target>

@@ -15,7 +15,6 @@
   <!-- Weird hack to test this because NuGet doesn't like local testing -->
   <PropertyGroup>
     <TerraUtilLocalTest>true</TerraUtilLocalTest>
-    <DisableIncrementalBuild>true</DisableIncrementalBuild>
   </PropertyGroup>
 
   <Import Project="../TerraUtil.BuildSystem/TerraUtil.BuildSystem.props" />
