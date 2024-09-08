@@ -10,8 +10,13 @@
     <DisplayName>TerraUtil.TestMod</DisplayName>
     <InternalName>TerraUtilTestMod</InternalName>
     <Author>Destructor_Ben</Author>
+    <Homepage>https://github.com/Destructor-Ben/TerraUtil</Homepage>
+
     <HideCode>false</HideCode>
     <HideResources>false</HideResources>
+    <PlayableOnPreview>false</PlayableOnPreview>
+    <TranslationMod>true</TranslationMod>
+    <Side>Client</Side>
   </PropertyGroup>
 
   <!-- Sort before and after -->

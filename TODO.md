@@ -12,7 +12,7 @@
 - [Done] Output tmod files to bin as well
 - [Done] Make mod file ignoring better
 - Clean up references
-- Clean up properties
+- [Done] Clean up properties
 - [Done] Unify internal names - Can only change if symlinks are used
 - Maybe don't make the root namespace get set and leave it up to the modder?
   - Make an internal name property, and set assembly name to it. Default internal name to the project name. Use the internal name in symlinking too.
