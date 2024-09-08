@@ -43,10 +43,10 @@ public class GenerateModSourcesSymlink : BaseTask
         {
             Log.LogWarning(
                 $"""
-                Unable to create symlink, please make sure that your IDE is run in admin mode or you run dotnet build with admin privileges.
-                Once the symlink is created, admin is no longer required to build the mod.
-                Exception: {e}
-                """
+                 Unable to create symlink, please make sure that your IDE is run in admin mode or you run dotnet build with admin privileges.
+                 Once the symlink is created, admin is no longer required to build the mod.
+                 Error: {e}
+                 """
             );
         }
     }
