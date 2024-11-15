@@ -78,7 +78,6 @@ public class PackageModFile : BaseTask
     [Required]
     public ITaskItem[] SortAfter { get; set; } = [];
 
-    private static readonly IList<string> SourceExtensions = [".csproj", ".cs", ".sln"];
     private static readonly IList<string> IgnoredNugetPackages = ["tModLoader.CodeAssist", "TerraUtil.BuildSystem"];
 
     protected override void Run()
@@ -334,6 +333,20 @@ public class PackageModFile : BaseTask
         else
             Log.LogMessage(MessageImportance.High, ".buildignore not found with path: " + buildIgnoreFilePath);
 
+        // Add default ignored files
+        properties.IgnoredFiles.Add(
+            [
+                ".*",
+                "bin/",
+                "obj/",
+                "*.csproj",
+                "*.sln",
+                "*.cs",
+                "Properties/launchSettings.json",
+                "Thumbs.db",
+            ]
+        );
+
         return properties;
     }
 
@@ -365,15 +378,8 @@ public class PackageModFile : BaseTask
     private bool IgnoreResource(BuildProperties properties, string resourcePath)
     {
         // Path relative to the project path
-        // TODO: possibly make these all added to the .buildignore automatically
         string path = resourcePath[(ProjectPath.Length + 1)..];
-        return properties.IgnoreFile(path)
-            || path[0] == '.'
-            || path.StartsWith("bin" + Path.DirectorySeparatorChar, StringComparison.Ordinal)
-            || path.StartsWith("obj" + Path.DirectorySeparatorChar, StringComparison.Ordinal)
-            || SourceExtensions.Contains(Path.GetExtension(resourcePath))
-            || path == Path.Join("Properties", "launchSettings.json")
-            || Path.GetFileName(resourcePath) == "Thumbs.db";
+        return properties.IgnoreFile(path);
     }
 
     private void AddResource(ModFile modFile, string resourcePath)

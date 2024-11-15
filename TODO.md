@@ -47,6 +47,7 @@
   - Build
   - Publish
   - Post mod file to Discord web hook
+  - Make GitHub release
 
 ## TerraUtil.TemplateMod
 - Template mod for TerraUtil
