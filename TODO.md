@@ -7,17 +7,23 @@
 - Clean up everything below
 
 ## TerraUtil.BuildSystem
-- [Done] Go through all code
-- [Done] Make mods automatically symlink to ModSources
-- [Done] Output tmod files to bin as well
-- [Done] Make mod file ignoring better
+- Effect compiler
+- Source generator for effects
+- Source generator for assets - Create fields for them, similar to AssGen?
+- Workshop icon generation
+- Workshop description & changelog generation (from possible a .tmd [terramarkdown] file?)
+- Allow mod properties to be set from a .toml file
+
+### Cleaning Up
+- Maybe make symlinking an opt in feature?
 - Clean up references
-- [Done] Clean up properties
-- [Done] Unify internal names - Can only change if symlinks are used
+  - The main issue is that references have to be inside the mod folder to be added
+  - Also, ignoring references can be weird and inconsistent, with Private being one way, but I've also heard of others
+  - Perhaps make a property (e.g. `Packed="true"`) that must be enabled if people want to include a dll in the mod?
 - Maybe don't make the root namespace get set and leave it up to the modder?
   - Make an internal name property, and set assembly name to it. Default internal name to the project name. Use the internal name in symlinking too.
   - Ignore the below
-    - Irrelevant names
+    - Irrelevant names, just me figuring out what actually matters
       - Mod class
       - Csproj name
       - Folder name
@@ -25,9 +31,6 @@
       - Assembly name
       - Root namespace
       - Add a mod name property?
-- Effect compiler
-- Workshop icon generation
-- Workshop description & changelog generation
 
 ## TerraUtil.API
 - Fix and clean up
@@ -37,8 +40,7 @@
 - Shader + asset hot reloads
 - Could look into what other dev mods do
 
-## TerraUtil.TestMod
-- Make a good test
+# Stuff I haven't started yet
 
 ## TerraUtil.GitHubActions
 - Various GitHub actions

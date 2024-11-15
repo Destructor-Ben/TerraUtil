@@ -16,7 +16,8 @@
     <PackageTags>Terraria;tModLoader</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageReleaseNotes>
-      Preparing for a release.
+      Massive work done on finishing the rest of the build system.
+      Ready for a few more features, which will be coming sometime soon.
     </PackageReleaseNotes>
 
     <PackageLicenseExpression>MIT</PackageLicenseExpression>

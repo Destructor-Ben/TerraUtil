@@ -24,10 +24,19 @@
     <SortAfter Include="CalamityMod" />
 
     <ModReference Include="AccessoriesPlus" Weak="true" />
+
+    <!--
+    The only reason this is commented out is because I need to be able to test TerraUtil locally instead of using the published version.
+    When actually using TerraUtil, also remember to update the version to the latest available one, or use "*" to automatically use the latest (not recommended).
+    <PackageReference Include="TerraUtil.BuildSystem" Version="1.0.0" />
+    -->
     <PackageReference Include="Ignore" Version="0.2.1" />
   </ItemGroup>
 
-  <!-- Weird hack to test this because NuGet doesn't like local testing -->
+  <!--
+  Weird hack to test this because NuGet doesn't like local testing.
+  If you are using this mod for reference, ignore everything below. Tt is only needed for the unpublished build of TerraUtil.
+  -->
   <PropertyGroup>
     <TerraUtilLocalTest>true</TerraUtilLocalTest>
   </PropertyGroup>
