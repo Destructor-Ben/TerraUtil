@@ -326,14 +326,8 @@ public class PackageModFile : BaseTask
         else
             Log.LogWarning("Mod description not found with path: " + descriptionPath);
 
-        // Get the list of ignored files
-        string buildIgnoreFilePath = Path.Combine(ProjectPath, ".buildignore");
-        if (File.Exists(buildIgnoreFilePath))
-            properties.IgnoredFiles.Add(File.ReadLines(buildIgnoreFilePath));
-        else
-            Log.LogMessage(MessageImportance.High, ".buildignore not found with path: " + buildIgnoreFilePath);
-
         // Add default ignored files
+        // This should be done before the .buildignore so it can be overriden
         properties.IgnoredFiles.Add(
             [
                 ".*",
@@ -346,6 +340,13 @@ public class PackageModFile : BaseTask
                 "Thumbs.db",
             ]
         );
+
+        // Get the list of ignored files
+        string buildIgnoreFilePath = Path.Combine(ProjectPath, ".buildignore");
+        if (File.Exists(buildIgnoreFilePath))
+            properties.IgnoredFiles.Add(File.ReadLines(buildIgnoreFilePath));
+        else
+            Log.LogMessage(MessageImportance.High, ".buildignore not found with path: " + buildIgnoreFilePath);
 
         return properties;
     }
