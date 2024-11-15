@@ -16,4 +16,6 @@
     </Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
+
+  <Target Name="BuildMod" />
 </Project>
