@@ -19,6 +19,7 @@
     <Side>Client</Side>
   </PropertyGroup>
 
+  <!-- References -->
   <ItemGroup>
     <SortBefore Include="ThoriumMod" />
     <SortAfter Include="CalamityMod" />
@@ -35,16 +36,7 @@
 
   <!--
   Weird hack to test this because NuGet doesn't like local testing.
-  If you are using this mod for reference, ignore everything below. Tt is only needed for the unpublished build of TerraUtil.
+  If you are using this mod for reference, ignore this below.
   -->
-  <PropertyGroup>
-    <TerraUtilLocalTest>true</TerraUtilLocalTest>
-  </PropertyGroup>
-
-  <Import Project="../TerraUtil.BuildSystem/TerraUtil.BuildSystem.props" />
-  <Import Project="../TerraUtil.BuildSystem/TerraUtil.BuildSystem.targets" />
-
-  <ItemGroup>
-    <ProjectReference Include="../TerraUtil.BuildSystem/TerraUtil.BuildSystem.csproj" Private="true" />
-  </ItemGroup>
+  <Import Project="../TerraUtil.BuildSystem/TerraUtil.BuildSystem.LocalTest.props" />
 </Project>

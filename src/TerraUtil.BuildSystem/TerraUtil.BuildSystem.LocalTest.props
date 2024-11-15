@@ -1,0 +1,13 @@
+﻿<Project>
+  <!-- Weird hack to test this because NuGet doesn't like local testing. -->
+  <PropertyGroup>
+    <TerraUtilLocalTest>true</TerraUtilLocalTest>
+  </PropertyGroup>
+
+  <Import Project="$(MSBuildThisFileDirectory)TerraUtil.BuildSystem.props" />
+  <Import Project="$(MSBuildThisFileDirectory)TerraUtil.BuildSystem.targets" />
+
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)TerraUtil.BuildSystem.csproj" Private="true" />
+  </ItemGroup>
+</Project>

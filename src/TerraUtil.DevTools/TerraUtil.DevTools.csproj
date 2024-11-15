@@ -1,10 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+  <!-- Properties -->
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <LangVersion>latest</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <Version>1.0.0</Version>
+    <DisplayName>TerraUtil.DevTools</DisplayName>
+    <InternalName>TerraUtilDevTools</InternalName>
+    <Author>Destructor_Ben</Author>
+    <Homepage>https://github.com/Destructor-Ben/TerraUtil</Homepage>
+
+    <HideCode>false</HideCode>
+    <HideResources>false</HideResources>
+    <Side>Client</Side>
   </PropertyGroup>
 
+  <Import Project="../TerraUtil.BuildSystem/TerraUtil.BuildSystem.LocalTest.props" />
 </Project>
