@@ -13,6 +13,7 @@
 - Workshop icon generation
 - Workshop description & changelog generation (from possible a .tmd [terramarkdown] file?)
 - Allow mod properties to be set from a .toml file
+- Assembly publicising
 
 ### Cleaning Up
 - Maybe make symlinking an opt in feature?
