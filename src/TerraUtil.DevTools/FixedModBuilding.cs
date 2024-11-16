@@ -1,84 +1,88 @@
 ﻿using System.Diagnostics;
 using System.Reflection;
-using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using log4net;
-using Mono.Cecil.Cil;
-using MonoMod.Cil;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ModLoader.Core;
+using NullReferenceException = System.NullReferenceException;
 
 namespace TerraUtilDevTools;
 
-public class FixedModBuilding : ILoadable
+public partial class FixedModBuilding : ILoadable
 {
     private static ILog Logger => DevTools.Instance.Logger;
 
-    // Make the mod building use dotnet build
+    [GeneratedRegex(@"^\s*(\d+) Error\(s\)", RegexOptions.Multiline | RegexOptions.Compiled)]
+    private static partial Regex ErrorRegex();
+
+    [GeneratedRegex(@"^\s*(\d+) Warning\(s\)", RegexOptions.Multiline | RegexOptions.Compiled)]
+    private static partial Regex WarningRegex();
+
+    [GeneratedRegex(@"error \w*:", RegexOptions.Compiled)]
+    private static partial Regex ErrorMessageRegex();
+
     public void Load(Mod mod)
     {
-        var uiBuildModType = typeof(Main).Assembly.GetType("Terraria.ModLoader.UI.UIBuildMod");
-        mod.Logger.Debug(uiBuildModType);
-        var buildModMethod = uiBuildModType?.GetMethod("BuildMod", BindingFlags.Instance | BindingFlags.NonPublic);
-        mod.Logger.Debug(buildModMethod);
+        // Make the mod building use dotnet build
+        var modCompileType = typeof(Main).Assembly.GetType("Terraria.ModLoader.Core.ModCompile");
+        var buildMethod = modCompileType?.GetMethod("Build", BindingFlags.Instance | BindingFlags.NonPublic, [typeof(string)]);
 
-        if (buildModMethod is null)
-            throw new NullReferenceException("Unable to edit BuildMod in UIBuildMod");
+        if (buildMethod is null)
+            throw new NullReferenceException("Unable to edit Build(string) in ModCompile");
 
-        MonoModHooks.Modify(buildModMethod, ModifyBuildMod);
+        MonoModHooks.Add(buildMethod, OnModCompileBuild);
     }
 
     public void Unload() { }
 
-    private static void ModifyBuildMod(ILContext il)
+    // Naughty, not always calling orig in detour!
+    private static void OnModCompileBuild(Action<object, string> orig, object self, string modFolder)
     {
-        var cursor = new ILCursor(il);
-
-        // Go to the build call
-        cursor.GotoNext(MoveType.After, i => i.OpCode == OpCodes.Newobj);
-        cursor.GotoNext(MoveType.After, i => i.OpCode == OpCodes.Newobj);
-
-        var newBuildModMethod = typeof(FixedModBuilding).GetMethod(nameof(BuildMod), BindingFlags.Static | BindingFlags.NonPublic);
-        if (newBuildModMethod is null)
-            throw new NullReferenceException("Unable to get new BuildMod method");
-
-        cursor.EmitCall(newBuildModMethod);
-
-        var label = cursor.MarkLabel();
-        cursor.EmitBr(label);
-        cursor.Index++;
-        cursor.MarkLabel(label);
+        // Don't worry about command line builds (for mods that don't use TerraUtil), mods aren't loaded
+        BuildMod(modFolder);
     }
 
-    // TODO: get the mod's name
     private static void BuildMod(string modFolder)
     {
         Logger.Debug("Overriding tML build system, using dotnet build");
 
+        // TODO: maybe add progress bar updating
+        // Load mod info
+        // TODO: status.SetStatus(Language.GetTextValue("tModLoader.ReadingProperties", modName));
+
+        if (modFolder.EndsWith('\\') || modFolder.EndsWith('/'))
+            modFolder = modFolder[..^1];
+
+        string modName = Path.GetFileName(modFolder);
+        string file = Path.Combine(ModLoader.ModPath, modName + ".tmod");
+
+        var modFileType = typeof(TmodFile);
+        var ctor = modFileType.GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic, [typeof(string), typeof(string), typeof(Version)]);
+        if (ctor is null)
+            throw new NullReferenceException("Failed to get TmodFile.ctor(string, string, Version)");
+
+        var modFile = (TmodFile)ctor.Invoke([file, modName, null]);
+
+        // Build the mod
         try
         {
-            status.SetStatus(Language.GetTextValue("tModLoader.Building", mod.Name));
+            // TODO: status.SetStatus(Language.GetTextValue("tModLoader.Building", mod.Name));
 
-            string csprojFile = Path.Combine(mod.path, mod.Name);
-            csprojFile = Path.ChangeExtension(csprojFile, ".csproj");
-            if (!File.Exists(csprojFile))
-            {
-                throw new BuildException(Language.GetTextValue("tModLoader.BuildErrorMissingCsproj"));
-            }
-
-            if (ModLoader.TryGetMod(mod.Name, out var loadedMod))
-            {
+            // Unload the mod
+            if (ModLoader.TryGetMod(modName, out var loadedMod))
                 loadedMod.Close();
-            }
 
-            string outputPath = mod.modFile.path;
+            // Run dotnet build
+            string outputPath = modFile.path;
             Process process = new()
             {
                 StartInfo = new ProcessStartInfo
                 {
-                    FileName = UIModSources.GetSystemDotnetPath() ?? "dotnet",
+                    FileName = "dotnet", // TODO: UIModSources.GetSystemDotnetPath() ?? "dotnet",
                     Arguments = $"build --no-incremental -c Release -v q -p:OutputTmodPath=\"{outputPath}\"",
-                    WorkingDirectory = mod.path,
+                    WorkingDirectory = modFolder,
                     UseShellExecute = false,
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
@@ -86,8 +90,8 @@ public class FixedModBuilding : ILoadable
                 },
             };
 
-            // Force locale to be in English.
-            // Needed because of how we are getting the error and warning count.
+            // Force locale to be in English
+            // Needed because of how we are getting the error and warning count
             process.StartInfo.EnvironmentVariables["DOTNET_CLI_UI_LANGUAGE"] = "en-US";
 
             process.Start();
@@ -95,26 +99,29 @@ public class FixedModBuilding : ILoadable
             string stderr = process.StandardError.ReadToEnd();
             process.WaitForExit(1000 * 60); // Wait up to a minute for the process to end
 
-            if (!process.HasExited || process.ExitCode != 0)
+            // Build succeeded!
+            if (process is { HasExited: true, ExitCode: 0 })
             {
-                Logger.Debug("Complete build output:\n" + output);
-                Logger.Debug("Stderr:\n" + stderr);
-
-                var errorMatch = ErrorRegex.Match(output);
-                var warningMatch = WarningRegex.Match(output);
-                string numErrors = errorMatch.Success ? errorMatch.Groups[1].Value : "?";
-                string numWarnings = warningMatch.Success ? warningMatch.Groups[1].Value : "?";
-
-                string firstError = output.Split('\n').FirstOrDefault(line => ErrorMessageRegex.IsMatch(line), "N/A");
-
-                throw new BuildException(Language.GetTextValue("tModLoader.CompileError", mod.Name + ".dll", numErrors, numWarnings) + $"\nError: {firstError}");
+                // TODO: LocalizationLoader.HandleModBuilt(mod.Name);
+                return;
             }
 
-            //LocalizationLoader.HandleModBuilt(mod.Name);
+            // Build failed :(
+            Logger.Error("Complete build output:\n" + output);
+            Logger.Error("Stderr:\n" + stderr);
+
+            var errorMatch = ErrorRegex().Match(output);
+            var warningMatch = WarningRegex().Match(output);
+            string numErrors = errorMatch.Success ? errorMatch.Groups[1].Value : "?";
+            string numWarnings = warningMatch.Success ? warningMatch.Groups[1].Value : "?";
+
+            string firstError = output.Split('\n').FirstOrDefault(line => ErrorMessageRegex().IsMatch(line), "N/A");
+
+            throw new Exception(Language.GetTextValue("tModLoader.CompileError", modName + ".dll", numErrors, numWarnings) + $"\nError: {firstError}");
         }
         catch (Exception e)
         {
-            e.Data["mod"] = mod.Name;
+            e.Data["mod"] = modName;
             throw;
         }
     }
