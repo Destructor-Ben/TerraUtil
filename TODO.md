@@ -1,4 +1,9 @@
 ﻿# To Do List
+
+- Port modSource in build.txt for symlinking
+  - What about using a custom mod name?
+- Check if any new things have been introduced to building in tML that need to be accounted for
+
 - Icons
   - 128x128 for TerraUtil.API (NuGet)
   - 128x128 for TerraUtil.BuildSystem (NuGet)
