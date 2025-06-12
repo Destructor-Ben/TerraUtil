@@ -17,5 +17,7 @@
     <Side>Client</Side>
   </PropertyGroup>
 
-  <Import Project="../TerraUtil.BuildSystem/TerraUtil.BuildSystem.LocalTest.props" />
+  <ItemGroup>
+    <PackageReference Include="TerraUtil.BuildSystem" Version="1.0.0" />
+  </ItemGroup>
 </Project>
