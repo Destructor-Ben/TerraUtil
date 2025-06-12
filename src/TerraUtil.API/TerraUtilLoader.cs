@@ -1,4 +1,6 @@
-﻿namespace TerraUtil;
+﻿using TerraUtil.API.Utilities;
+
+namespace TerraUtil.API;
 
 /// <summary>
 /// A template <see cref="ModSystem" /> for loading content.

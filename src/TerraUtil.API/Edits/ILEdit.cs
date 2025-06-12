@@ -1,7 +1,7 @@
-﻿using MonoMod.Cil;
-using System.Reflection;
+﻿using System.Reflection;
+using MonoMod.Cil;
 
-namespace TerraUtil.Edits;
+namespace TerraUtil.API.Edits;
 
 /// <summary>
 /// An abstraction of an IL edit.

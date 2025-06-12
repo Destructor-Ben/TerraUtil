@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Terraria.ModLoader.Config;
 
-namespace TerraUtil.Configuration;
+namespace TerraUtil.API.Configuration;
 
 /// <summary>
 /// A variant of <see cref="ModConfig" /> that automatically implements recursive <see cref="ModConfig.NeedsReload(ModConfig)" />.

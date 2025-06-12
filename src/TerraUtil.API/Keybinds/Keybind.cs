@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Input;
 using Terraria.GameInput;
 
-namespace TerraUtil.Keybinds;
+namespace TerraUtil.API.Keybinds;
 
 /// <summary>
 /// Provides an abstraction for <see cref="ModKeybind" />.

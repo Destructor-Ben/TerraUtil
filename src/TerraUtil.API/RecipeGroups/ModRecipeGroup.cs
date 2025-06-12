@@ -1,4 +1,4 @@
-﻿namespace TerraUtil.RecipeGroups;
+﻿namespace TerraUtil.API.RecipeGroups;
 
 /// <summary>
 /// An abstraction for <see cref="RecipeGroup" />.

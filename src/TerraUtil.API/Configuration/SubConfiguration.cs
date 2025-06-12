@@ -2,7 +2,7 @@
 using Terraria.ModLoader.Config;
 using Terraria.ModLoader.Config.UI;
 
-namespace TerraUtil.Configuration;
+namespace TerraUtil.API.Configuration;
 
 /// <summary>
 /// A type that can be extended from to make a sub-config.<br />

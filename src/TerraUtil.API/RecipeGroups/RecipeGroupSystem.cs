@@ -1,4 +1,6 @@
-﻿namespace TerraUtil.RecipeGroups;
+﻿using TerraUtil.API.Utilities;
+
+namespace TerraUtil.API.RecipeGroups;
 
 public class RecipeGroupSystem : TerraUtilLoader<ModRecipeGroup>
 {

@@ -23,8 +23,8 @@
         <Using Include="Terraria.ModLoader" />
         <Using Include="Terraria.Utilities" />
         <Using Include="Terraria.DataStructures" />
-        <Using Include="TerraUtil" />
-        <Using Include="TerraUtil.Utilities" />
+        <Using Include="TerraUtil.API" />
+        <Using Include="TerraUtil.API.Utilities" />
       </ItemGroup>
     </When>
   </Choose>

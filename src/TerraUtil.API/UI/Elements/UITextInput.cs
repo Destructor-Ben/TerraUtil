@@ -1,6 +1,6 @@
 ﻿using Terraria.UI;
 
-namespace TerraUtil.UI.Elements;
+namespace TerraUtil.API.UI.Elements;
 
 // TODO: implement text input
 public class UITextInput : UIElement { }

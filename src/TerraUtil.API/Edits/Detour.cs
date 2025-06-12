@@ -1,4 +1,4 @@
-﻿namespace TerraUtil.Edits;
+﻿namespace TerraUtil.API.Edits;
 
 /// <summary>
 /// An abstraction of a detour.

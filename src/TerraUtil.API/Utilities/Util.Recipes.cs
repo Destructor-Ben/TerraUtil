@@ -1,6 +1,6 @@
-﻿using TerraUtil.RecipeGroups;
+﻿using TerraUtil.API.RecipeGroups;
 
-namespace TerraUtil.Utilities;
+namespace TerraUtil.API.Utilities;
 
 public static partial class Util
 {

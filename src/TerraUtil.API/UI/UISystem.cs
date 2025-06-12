@@ -1,6 +1,7 @@
 ﻿using Terraria.UI;
+using TerraUtil.API.Utilities;
 
-namespace TerraUtil.UI;
+namespace TerraUtil.API.UI;
 
 public class UISystem : TerraUtilLoader<Interface>
 {

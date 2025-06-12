@@ -1,8 +1,9 @@
 ﻿using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader.UI;
 using Terraria.UI;
+using TerraUtil.API.Utilities;
 
-namespace TerraUtil.UI.Elements;
+namespace TerraUtil.API.UI.Elements;
 
 public abstract class UIWindow : Interface
 {
@@ -39,11 +40,7 @@ public abstract class UIWindow : Interface
         Append(Panel);
 
         // Title bar
-        TitleBar = new()
-        {
-            Width = { Percent = 1f },
-            Height = { Pixels = 30 }
-        };
+        TitleBar = new() { Width = { Percent = 1f }, Height = { Pixels = 30 } };
 
         Panel.Append(TitleBar);
 
@@ -51,11 +48,7 @@ public abstract class UIWindow : Interface
         Content = new()
         {
             Width = { Percent = 1f },
-            Height =
-            {
-                Pixels = -30,
-                Percent = 1f
-            },
+            Height = { Pixels = -30, Percent = 1f },
             Top = { Pixels = 30 },
             PaddingTop = 12
         };
@@ -63,12 +56,7 @@ public abstract class UIWindow : Interface
         Panel.Append(Content);
 
         // Close button
-        CloseButton = new(Util.GetTexture("SearchCancel", false, "Terraria.Images.UI"))
-        {
-            VAlign = 0f,
-            HAlign = 1f,
-            MarginRight = -6
-        };
+        CloseButton = new(Util.GetTexture("SearchCancel", false, "Terraria.Images.UI")) { VAlign = 0f, HAlign = 1f, MarginRight = -6 };
 
         CloseButton.OnLeftClick += (_, _) =>
         {

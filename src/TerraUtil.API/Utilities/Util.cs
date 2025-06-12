@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using Terraria.ModLoader.Core;
 
-namespace TerraUtil.Utilities;
+namespace TerraUtil.API.Utilities;
 
 /// <summary>
 /// A static class containing many helper and utility fields and methods.

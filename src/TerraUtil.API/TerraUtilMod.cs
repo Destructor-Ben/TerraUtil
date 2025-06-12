@@ -1,6 +1,7 @@
-﻿using TerraUtil.Networking;
+﻿using TerraUtil.API.Networking;
+using TerraUtil.API.Utilities;
 
-namespace TerraUtil;
+namespace TerraUtil.API;
 
 /// <summary>
 /// Functions as the base <see cref="Mod" /> class but integrates TerraUtil loading into it.

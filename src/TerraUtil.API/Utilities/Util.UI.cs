@@ -1,7 +1,7 @@
 ﻿using Terraria.ModLoader.UI;
 using Terraria.UI;
 
-namespace TerraUtil.Utilities;
+namespace TerraUtil.API.Utilities;
 
 // TODO: add ways to not trigger parent OnMouseHover, but still set IsMouseHovering so hover effect apply to parent but don't double sound effects and onhover, etc.
 // TODO: also allow elements to "swallow" mouse inputs when an element is hovered over so ui layers beneath it doesn't get triggered
