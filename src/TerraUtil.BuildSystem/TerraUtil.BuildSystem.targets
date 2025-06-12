@@ -46,7 +46,7 @@
   </Target>
 
   <!-- Symlink into ModSources if the mod isn't in there -->
-  <UsingTask TaskName="GenerateModSourcesSymlink" AssemblyFile="$(TerraUtilTasksPath)" TaskFactory="TaskHostFactory" />
+  <UsingTask TaskName="GenerateModSourcesSymlink" AssemblyFile="$(TerraUtil-TasksPath)" TaskFactory="TaskHostFactory" />
   <Target Name="GenerateModSourcesSymlink" AfterTargets="Build">
     <GenerateModSourcesSymlink
       ProjectPath="$(MSBuildProjectDirectory)"
@@ -56,7 +56,7 @@
   </Target>
 
   <!-- Package the mod into a .tmod file -->
-  <UsingTask TaskName="PackageModFile" AssemblyFile="$(TerraUtilTasksPath)" TaskFactory="TaskHostFactory" />
+  <UsingTask TaskName="PackageModFile" AssemblyFile="$(TerraUtil-TasksPath)" TaskFactory="TaskHostFactory" />
   <Target Name="Package" AfterTargets="Build">
     <Message Text="Packaging mod..." />
 

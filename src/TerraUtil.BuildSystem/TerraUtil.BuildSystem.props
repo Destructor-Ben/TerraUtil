@@ -12,10 +12,10 @@
     <tMLTargetsPath>$(tMLModSourcesPath)tModLoader.targets</tMLTargetsPath>
 
     <!-- TerraUtil.BuildSystem dll path -->
-    <TerraUtilTasksPath>$(MSBuildThisFileDirectory)$(MSBuildThisFileName).dll</TerraUtilTasksPath>
+    <TerraUtil-TasksPath>$(MSBuildThisFileDirectory)$(MSBuildThisFileName).dll</TerraUtil-TasksPath>
 
     <!-- Debug tasks path (because NuGet is weird and doesn't like local testing) -->
-    <TerraUtilTasksPath Condition="'$(TerraUtilLocalTest)' == 'true'">$(MSBuildThisFileDirectory)bin/Debug/net8.0/$(MSBuildThisFileName).dll</TerraUtilTasksPath>
+    <TerraUtil-TasksPath Condition="'$(TerraUtil-LocalTest)' == 'true'">$(MSBuildThisFileDirectory)bin/Debug/net8.0/$(MSBuildThisFileName).dll</TerraUtil-TasksPath>
   </PropertyGroup>
 
   <!-- Include files that should trigger a rebuild/be available to source generators -->

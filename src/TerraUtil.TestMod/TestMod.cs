@@ -1,8 +1,7 @@
-﻿using Terraria.ModLoader;
+﻿namespace TerraUtilTestMod;
 
-namespace TerraUtilTestMod;
-
-public class TestMod : Mod
+// Example of using something from TerraUtil.API
+public class TestMod : TerraUtilMod
 {
     public override void Load()
     {

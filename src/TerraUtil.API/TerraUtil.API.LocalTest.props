@@ -1,0 +1,9 @@
+﻿<Project>
+  <!-- Weird hack to test this because NuGet doesn't like local testing. -->
+  <Import Project="$(MSBuildThisFileDirectory)TerraUtil.API.props" />
+  <Import Project="$(MSBuildThisFileDirectory)TerraUtil.API.targets" />
+
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)TerraUtil.API.csproj" />
+  </ItemGroup>
+</Project>

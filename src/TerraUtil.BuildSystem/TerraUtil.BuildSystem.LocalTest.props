@@ -1,7 +1,7 @@
 ﻿<Project>
   <!-- Weird hack to test this because NuGet doesn't like local testing. -->
   <PropertyGroup>
-    <TerraUtilLocalTest>true</TerraUtilLocalTest>
+    <TerraUtil-LocalTest>true</TerraUtil-LocalTest>
   </PropertyGroup>
 
   <Import Project="$(MSBuildThisFileDirectory)TerraUtil.BuildSystem.props" />
