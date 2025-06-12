@@ -10,6 +10,7 @@
     <InternalName Condition="'$(InternalName)' == ''">$(MSBuildProjectName)</InternalName>
 
     <!-- Assembly name needs to match internal name, and at least one type has to be in a namespace that starts with the mods internal name -->
+    <!-- TODO: just add a dummy type in the required namespace and let the user set the root namespace -->
     <AssemblyName>$(InternalName)</AssemblyName>
     <RootNamespace>$(InternalName)</RootNamespace>
   </PropertyGroup>
